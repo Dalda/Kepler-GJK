@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Kepler</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="action_about">O aplikaci</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>
