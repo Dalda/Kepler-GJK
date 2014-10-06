@@ -35,12 +35,6 @@ public class Home extends Activity {
             case R.id.action_refresh:
                 //refreshPage();
                 return true;
-            case R.id.action_settings:
-                //openSettings();
-                return true;
-            case R.id.action_about:
-                //openAbout();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
