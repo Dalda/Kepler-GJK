@@ -5,5 +5,7 @@
     <string name="action_settings">Nastavení</string>
     <string name="action_about">O aplikaci</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_activity_food">Jídelna</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
