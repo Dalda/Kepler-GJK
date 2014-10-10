@@ -10,6 +10,8 @@
 
     <TextView
         android:text="@string/title_activity_food"
+        android:id="@+id/text_obedy"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
