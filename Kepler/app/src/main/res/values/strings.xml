@@ -2,10 +2,17 @@
 <resources>
 
     <string name="app_name">Kepler</string>
-    <string name="action_settings">Nastavení</string>
-    <string name="action_about">O aplikaci</string>
+
     <string name="action_refresh">Refresh</string>
+
+    <string name="title_activity_home">Suplování</string>
     <string name="title_activity_food">Jídelna</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings">Nastavení</string>
+
+    <string-array name="navigation">
+        <item>@string/title_activity_home</item>
+        <item>@string/title_activity_food</item>
+        <item>@string/title_activity_settings</item>
+    </string-array>
 
 </resources>

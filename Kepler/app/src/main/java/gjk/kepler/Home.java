@@ -3,8 +3,13 @@ package gjk.kepler;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,15 +20,41 @@ public class Home extends Activity {
     private TextView text_suplovani;
     private HTML_Loader myHTML;
 
+    private String[] myNavigationNames;
+    private DrawerLayout myDrawerLayout;
+    private ListView myDrawerList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        text_suplovani = (TextView) findViewById(R.id.text_suplovani);
 
+        myNavigationNames = getResources().getStringArray(R.array.navigation);
+        myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        myDrawerList = (ListView) findViewById(R.id.navigation_drawer);
+        // Nastavit adapter pro List View - ten naplní navigation_drawer položkami TextView,
+        // které jsou specifikované v drawer_list_item.xml
+        myDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, myNavigationNames));
+        // Zareagovat na kliknutí
+        myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        text_suplovani = (TextView) findViewById(R.id.text_suplovani);
         myHTML = new HTML_Loader(this);
         this.getPage(url_suplovani); //načti suplování při prvním spuštění
     }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+    private void selectItem(int position) {
+        myDrawerList.setItemChecked(position, true);
+        setTitle(myNavigationNames[position]);
+        myDrawerLayout.closeDrawer(myDrawerList);
+    }
+
 
     private void getPage(String myURL){
         if(myHTML.checkConnection()){
