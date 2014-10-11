@@ -1,10 +1,12 @@
 package gjk.kepler;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Home extends Activity {
@@ -18,11 +20,37 @@ public class Home extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         text_suplovani = (TextView) findViewById(R.id.text_suplovani);
+
         myHTML = new HTML_Loader(this);
-        myHTML.refreshPage(url_suplovani); //načti suplování při prvním spuštění
+        this.getPage(url_suplovani); //načti suplování při prvním spuštění
     }
 
-    public void show(String s){
+    private void getPage(String myURL){
+        if(myHTML.checkConnection()){
+            Toast.makeText(this, "Aktualizuji...", Toast.LENGTH_LONG).show();
+            new DownloadWebpageTask().execute(myURL);
+        }else{
+            //není připojení
+            Toast.makeText(this, "Nejste připojeni k internetu.", Toast.LENGTH_LONG).show();
+        }
+    }
+    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+        //stáhne webovou stránku v novém vlákně - jinak by se UI sekalo
+        @Override
+        protected String doInBackground(String... urls) {
+            return myHTML.getHTML(urls);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            if(result == null) {
+                Toast.makeText(Home.this, "Nelze získat webovou stránku. Chybná URL?", Toast.LENGTH_LONG).show();
+            }else{
+                show(result);
+            }
+        }
+    }
+
+    private void show(String s){
         text_suplovani.setText(s);
     }
 
@@ -39,7 +67,7 @@ public class Home extends Activity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_refresh:
-                myHTML.refreshPage(url_suplovani);
+                this.getPage(url_suplovani);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
