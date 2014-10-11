@@ -58,6 +58,7 @@ public class Home extends Activity {
             };
         // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
         myDrawerLayout.setDrawerListener(myDrawerToggle);
+        // Nastaví app icon jako toggle pro navigation drawer
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -98,15 +99,24 @@ public class Home extends Activity {
             selectItem(position);
         }
     }
+    /* Navigation drawer click event */
     private void selectItem(int position) {
         myDrawerList.setItemChecked(position, true);
         setTitle(myNavigationNames[position]);
         myDrawerLayout.closeDrawer(myDrawerList);
 
-        
+        switch(position) { //tohle se predela na FRAGMENTY !!!!!!!!!!
+            case 0:
+                Intent a = new Intent(this, Home.class);
+                startActivity(a);
+                break;
 
+            case 1:
+                Intent b = new Intent(this, Food.class);
+                startActivity(b);
+                break;
+        }
     }
-
 
     private void getPage(String myURL){
         if(myHTML.checkConnection()){
