@@ -15,4 +15,8 @@
         <item>@string/title_activity_settings</item>
     </string-array>
 
+    <string name="title_navigation_drawer">Navigace</string>
+    <string name="drawer_open">Otevřen</string>
+    <string name="drawer_close">Zavřen</string>
+
 </resources>

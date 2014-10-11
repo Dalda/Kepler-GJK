@@ -3,6 +3,7 @@ package gjk.kepler;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ public class Home extends Activity {
 
     private String[] myNavigationNames;
     private DrawerLayout myDrawerLayout;
+    private ActionBarDrawerToggle myDrawerToggle;
     private ListView myDrawerList;
 
     @Override
@@ -37,10 +39,36 @@ public class Home extends Activity {
         myDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, myNavigationNames));
         // Zareagovat na kliknutí
         myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        myDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+            /** Zavolá se teprve když je navigation drawer úplně zavřený */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(getTitle());
+                invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
+            }
+            /** Zavolá se teprve když je navigation drawer úplně otevřený */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(R.string.title_navigation_drawer);
+                invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
+            }
+        };
+        // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
+        myDrawerLayout.setDrawerListener(myDrawerToggle);
+
 
         text_suplovani = (TextView) findViewById(R.id.text_suplovani);
         myHTML = new HTML_Loader(this);
         this.getPage(url_suplovani); //načti suplování při prvním spuštění
+    }
+    /* Zavolána při volání invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Pokud je navigation drawer otevřen, skryj ikony action baru
+        boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
+        menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
