@@ -16,7 +16,7 @@
     </string-array>
 
     <string name="title_navigation_drawer">Navigace</string>
-    <string name="drawer_open">Otevřen</string>
-    <string name="drawer_close">Zavřen</string>
+    <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
+    <string name="drawer_close">Zavři navigaci</string> <!-- for accessibility -->
 
 </resources>

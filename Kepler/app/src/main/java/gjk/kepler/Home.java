@@ -1,6 +1,8 @@
 package gjk.kepler;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -41,27 +43,45 @@ public class Home extends Activity {
         myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         myDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout,
                 R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-            /** Zavolá se teprve když je navigation drawer úplně zavřený */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(getTitle());
-                invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
-            }
-            /** Zavolá se teprve když je navigation drawer úplně otevřený */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(R.string.title_navigation_drawer);
-                invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
-            }
-        };
+                /** Zavolá se teprve když je navigation drawer úplně zavřený */
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    getActionBar().setTitle(getTitle());
+                    invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
+                }
+                /** Zavolá se teprve když je navigation drawer úplně otevřený */
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    getActionBar().setTitle(R.string.title_navigation_drawer);
+                    invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
+                }
+            };
         // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
         myDrawerLayout.setDrawerListener(myDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
 
         text_suplovani = (TextView) findViewById(R.id.text_suplovani);
         myHTML = new HTML_Loader(this);
         this.getPage(url_suplovani); //načti suplování při prvním spuštění
     }
+
+    /* override kvůli aktualizaci ikony navigation draweru kdykoli po activity restore*/
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync pokud byla zavolána onRestoreInstanceState
+        myDrawerToggle.syncState();
+    }
+
+    /* Zavolána při změně orientace obrazovky apod. */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        myDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
     /* Zavolána při volání invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -71,6 +91,7 @@ public class Home extends Activity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /* Navigation drawer click event */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -81,6 +102,9 @@ public class Home extends Activity {
         myDrawerList.setItemChecked(position, true);
         setTitle(myNavigationNames[position]);
         myDrawerLayout.closeDrawer(myDrawerList);
+
+        
+
     }
 
 
@@ -122,6 +146,12 @@ public class Home extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Předej event do ActionBarDrawerToggle
+        // když vrátí true, tak zpracoval kliknutí na app icon
+        if (myDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        //jinak normálně zpracujeme action bar vpravo
         // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
         int id = item.getItemId();
         switch (id) {
