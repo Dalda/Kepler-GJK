@@ -34,7 +34,6 @@ Zjištění stavu Bakalářů, výstupním souborem je vždy HTML tabulka
 Učení se vytváření aplikace pro operační systém Android (Activities, UIs, XML, resources)
 
 8.10.
-"Hluboké přemýšlení"
 Zvažování podporování jiných platforem (iOS a Windows Phone)
 	Prozatím jsem nápad zavrhl, neexistují vhodné nástroje a převodníky (není divu Java a ObjC je obrovský rozdíl)
 API na gjk serveru nejlépe v PHP (PHP tam už je)
