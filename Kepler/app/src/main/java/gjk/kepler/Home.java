@@ -3,7 +3,6 @@ package gjk.kepler;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,15 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Home extends Activity {
 
-    private String url_suplovani = "http://old.gjk.cz/suplovani.php";
-    private String url_obedy = "http://gjk.cz/?id=4332";
-    private HTML_Loader myHTML;
+    private int current; //Nutný pro refresh akci v action baru
 
     private String[] myNavigationNames;
     private DrawerLayout myDrawerLayout;
@@ -62,8 +57,8 @@ public class Home extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        myHTML = new HTML_Loader(this);
-        this.getPage(url_suplovani); //načti suplování při prvním spuštění
+        current = 0;
+        selectItem(current); //načti první stránku při prvním spuštění aplikaci
     }
 
     /* override kvůli aktualizaci ikony navigation draweru kdykoli po activity restore*/
@@ -97,8 +92,19 @@ public class Home extends Activity {
             selectItem(position);
         }
     }
+
     /* Navigation drawer click event */
     private void selectItem(int position) {
+        current = position;
+        createContent(position);
+
+        myDrawerList.setItemChecked(position, true);
+        setTitle(myNavigationNames[position]);
+        myDrawerLayout.closeDrawer(myDrawerList);
+    }
+
+    /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky */
+    private void createContent(int position){
         // Vytvoří nový fragment a nastaví obsah podle argumentu
         Fragment fragment = new Content(); //moje třída Content
         Bundle args = new Bundle();
@@ -106,41 +112,6 @@ public class Home extends Activity {
         fragment.setArguments(args);
         // Vložíme nový fragment nahrazením stávajícího
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        myDrawerList.setItemChecked(position, true);
-        setTitle(myNavigationNames[position]);
-        myDrawerLayout.closeDrawer(myDrawerList);
-    }
-
-    private void getPage(String myURL){
-        if(myHTML.checkConnection()){
-            Toast.makeText(this, "Aktualizuji...", Toast.LENGTH_LONG).show();
-            new DownloadWebpageTask().execute(myURL);
-        }else{
-            //není připojení
-            Toast.makeText(this, "Nejste připojeni k internetu.", Toast.LENGTH_LONG).show();
-        }
-    }
-    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
-        //stáhne webovou stránku v novém vlákně - jinak by se UI sekalo
-        @Override
-        protected String doInBackground(String... urls) {
-            return myHTML.getHTML(urls);
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            if(result == null) {
-                Toast.makeText(Home.this, "Nelze získat webovou stránku. Chybná URL?", Toast.LENGTH_LONG).show();
-            }else{
-                show(result);
-            }
-        }
-    }
-
-    private void show(String s){
-
-        Toast.makeText(Home.this, "OK jsem v show(String s)", Toast.LENGTH_LONG).show();
-        //text_content.setText(s);
     }
 
     @Override
@@ -162,11 +133,13 @@ public class Home extends Activity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_refresh:
-                this.getPage(url_suplovani);
+                this.createContent(current);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 }

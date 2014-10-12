@@ -14,6 +14,10 @@
         <item>@string/title_food</item>
         <item>@string/title_settings</item>
     </string-array>
+    <string-array name="urls"> <!-- odpovídá poli "navigation", protože nelze 2D pole -->
+        <item>http://old.gjk.cz/suplovani.php</item><!-- Suplování -->
+        <item>http://gjk.cz/?id=4332</item><!-- Jídelna -->
+    </string-array>
 
     <string name="title_navigation_drawer">GJK</string>
     <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
