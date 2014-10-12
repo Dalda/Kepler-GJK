@@ -1,7 +1,7 @@
 package gjk.kepler;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class Home extends Activity {
 
     private String url_suplovani = "http://old.gjk.cz/suplovani.php";
-    private TextView text_suplovani;
+    private String url_obedy = "http://gjk.cz/?id=4332";
     private HTML_Loader myHTML;
 
     private String[] myNavigationNames;
@@ -62,8 +62,6 @@ public class Home extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-
-        text_suplovani = (TextView) findViewById(R.id.text_suplovani);
         myHTML = new HTML_Loader(this);
         this.getPage(url_suplovani); //načti suplování při prvním spuštění
     }
@@ -101,21 +99,17 @@ public class Home extends Activity {
     }
     /* Navigation drawer click event */
     private void selectItem(int position) {
+        // Vytvoří nový fragment a nastaví obsah podle argumentu
+        Fragment fragment = new Content(); //moje třída Content
+        Bundle args = new Bundle();
+        args.putInt(Content.ARG_CONTENT_NUMBER, position); //přibalíme argument
+        fragment.setArguments(args);
+        // Vložíme nový fragment nahrazením stávajícího
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+
         myDrawerList.setItemChecked(position, true);
         setTitle(myNavigationNames[position]);
         myDrawerLayout.closeDrawer(myDrawerList);
-
-        switch(position) { //tohle se predela na FRAGMENTY !!!!!!!!!!
-            case 0:
-                Intent a = new Intent(this, Home.class);
-                startActivity(a);
-                break;
-
-            case 1:
-                Intent b = new Intent(this, Food.class);
-                startActivity(b);
-                break;
-        }
     }
 
     private void getPage(String myURL){
@@ -144,7 +138,9 @@ public class Home extends Activity {
     }
 
     private void show(String s){
-        text_suplovani.setText(s);
+
+        Toast.makeText(Home.this, "OK jsem v show(String s)", Toast.LENGTH_LONG).show();
+        //text_content.setText(s);
     }
 
     @Override
@@ -172,4 +168,5 @@ public class Home extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

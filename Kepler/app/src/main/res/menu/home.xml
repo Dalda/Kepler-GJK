@@ -2,31 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Home" >
 
-    <!-- Tlačítko aktualizovat v liště
-            -toto tlacitko bude jako jedine vpravo v actionbaru
-    -->
+    <!--Tlačítko aktualizovat v liště (action bar)- vpravo jediné-->
     <item android:id="@+id/action_refresh"
         android:icon="@drawable/ic_menu_refresh"
         android:title="@string/action_refresh"
         android:showAsAction="ifRoom" />
-
-    <!-- Nastavení po rozkliknutí menu
-        -nastaveni bude ve vytahovaci liste vlevo
-            -bude tam mit ikonu ozubeneho kola
-
-        -v tomto levem menu po vytazeni budou take polozky:
-            -suplovani
-            -obedy
-            -nastaveni
-          -a vse bude s ikonami - ikona priboru pro obedy
-          -podobne jako v google aplikacich jako gmail, gdocs apod
-
-    -->
-
-    <!-- O aplikaci
-         -tato polozka bude primo v aktivite "nastaveni"
-
-    -->
-
 
 </menu>

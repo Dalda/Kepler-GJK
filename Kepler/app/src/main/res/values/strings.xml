@@ -5,17 +5,17 @@
 
     <string name="action_refresh">Refresh</string>
 
-    <string name="title_activity_home">Suplování</string>
-    <string name="title_activity_food">Jídelna</string>
-    <string name="title_activity_settings">Nastavení</string>
+    <string name="title_home">Suplování</string>
+    <string name="title_food">Jídelna</string>
+    <string name="title_settings">Nastavení</string>
 
     <string-array name="navigation">
-        <item>@string/title_activity_home</item>
-        <item>@string/title_activity_food</item>
-        <item>@string/title_activity_settings</item>
+        <item>@string/title_home</item>
+        <item>@string/title_food</item>
+        <item>@string/title_settings</item>
     </string-array>
 
-    <string name="title_navigation_drawer">Navigace</string>
+    <string name="title_navigation_drawer">GJK</string>
     <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
     <string name="drawer_close">Zavři navigaci</string> <!-- for accessibility -->
 
