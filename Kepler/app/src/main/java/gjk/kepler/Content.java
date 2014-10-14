@@ -43,7 +43,7 @@ public class Content extends Fragment {
                 getPage(getResources().getString(R.string.domain)+"?type=jidelna");
                 break;
             case 2:
-                content_text.setText("Study: Rozvrh: Docházka:");
+                content_text.setText("Study: Docházka: Rozvrh:gjk.cz/~kupka/ Knihovna: Uvod/Aktuality:gjk.cz");
                 break;
             case 3:
                 content_text.setText("Tady bude nastavení (ale v nové aktivitě bez refresh)...");

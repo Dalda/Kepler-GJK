@@ -10,11 +10,9 @@ Android aplikace pro Gymnázium Jana Keplera.
 Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
 
 ==========
-Kromě suplování a obědů by to chtělo později přidat odkazy na: Study/Docházku, Knihovnu, úvodní stránku GJK, rozvrh na gjk.cz/~kupka
-
 Dodělat návrh API se specifikací dat jako odpověď na dané GET parametry
+Specifikovat UI aplikace, screenshots apod.
 
-Specifikovat UI aplikace, - screenshots apod.
 ==========
 Changelog
 
