@@ -37,10 +37,15 @@ public class Content extends Fragment {
         int i = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(i){
             case 0:
+                getPage(getResources().getString(R.string.domain)+"?type=suplovani&name="+"4.A");
+                break;
             case 1:
-                getPage(getResources().getStringArray(R.array.urls)[i]);
+                getPage(getResources().getString(R.string.domain)+"?type=jidelna");
                 break;
             case 2:
+                content_text.setText("Study: Rozvrh: Docházka:");
+                break;
+            case 3:
                 content_text.setText("Tady bude nastavení (ale v nové aktivitě bez refresh)...");
                 break;
         }
@@ -82,5 +87,6 @@ public class Content extends Fragment {
 /* Nastavení bude ve vytahovaci liste vlevo
         -bude tam mit ikonu ozubeneho kola
         -(vse bude s ikonami) - ikona priboru pro obedy apod, podobne jako v gmail, gdocs apod
+     Polozka "Odkazy"
      O aplikaci - -tato polozka bude primo v aktivite "nastaveni"
 */

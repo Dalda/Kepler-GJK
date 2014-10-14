@@ -7,17 +7,16 @@
 
     <string name="title_home">Suplování</string>
     <string name="title_food">Jídelna</string>
+    <string name="title_links">Odkazy</string>
     <string name="title_settings">Nastavení</string>
 
     <string-array name="navigation">
         <item>@string/title_home</item>
         <item>@string/title_food</item>
+        <item>@string/title_links</item>
         <item>@string/title_settings</item>
     </string-array>
-    <string-array name="urls"> <!-- odpovídá poli "navigation", protože nelze 2D pole -->
-        <item>http://old.gjk.cz/suplovani.php</item><!-- Suplování -->
-        <item>http://gjk.cz/?id=4332</item><!-- Jídelna -->
-    </string-array>
+    <string name="domain">http://gjk.cz/~xhajd01/</string>
 
     <string name="title_navigation_drawer">GJK</string>
     <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
