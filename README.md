@@ -7,19 +7,14 @@ Maturitní projekt z informatiky.
 
 Android aplikace pro Gymnázium Jana Keplera. 
 
-Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a týdenní jídelníček školní jídelny.
+Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
 
 ==========
-Návrhy rozšíření aplikace
+Kromě suplování a obědů by to chtělo později přidat odkazy na: Study/Docházku, Knihovnu, úvodní stránku GJK, rozvrh na gjk.cz/~kupka
 
-Kromě suplování a obědů by to chtělo později přidat
-	
-	Rozvrh (problém s PDF)
-	Aktuality (testovací RSS kanál ?)
-	Odkaz na Study/Docházku
-	Knihovna
-	Suplování musí být i pro učitele
+Dodělat návrh API se specifikací dat jako odpověď na dané GET parametry
 
+Specifikovat UI aplikace, - screenshots apod.
 ==========
 Changelog
 
@@ -32,28 +27,35 @@ Zjišťování toho, v čem budu aplikaci vytvářet a jaké nástroje budu pot�
 
 2.10.
 
-Zjištění stavu Bakalářů, výstupním souborem je vždy HTML tabulka
+Zjištění stavu Bakalářů, výstupním souborem je vždy HTML tabulka.
 
 7.10.
 
-Učení se vytváření aplikace pro operační systém Android (Activities, UIs, XML, resources)
+Učení se vytváření aplikace pro operační systém Android (Activities, UIs, XML, resources).
 
 8.10.
 
 Zvažování podporování jiných platforem (iOS a Windows Phone).
 
-Prozatím jsem nápad zavrhl, neexistují vhodné nástroje a převodníky (není divu Java a ObjC je obrovský rozdíl)
+Nápad jsem zavrhl, neexistují vhodné nástroje a převodníky (není divu Java a ObjC je obrovský rozdíl).
 
-API na gjk serveru nejlépe v PHP (PHP tam už je). Android aplikace provede HTTP GET požadavek
+API na gjk serveru nejlépe v PHP (PHP tam už je). Android aplikace provede HTTP GET požadavek.
 
-12.10
+12.10.
 
 Dokončen základ Android aplikace
 
-V aplikaci funguje navigace mezi jednotlivými položkami (další položky postupně přibudou)
+V aplikaci funguje navigace mezi jednotlivými položkami (další položky postupně přibudou).
 
 HTTP GET požadavek je funkční a aplikace umí tento text zobrazit uživateli.
 
 Chybí však položka nastavení a je nutné dodělat ikony v navigaci.
+
+14.10.
+
+Vytváření API pro php skript na GJK serveru => HTTP GET s parametry pro suplování, třídu, jídelnu apod.
+
+Pro parsování je potřeba povolit modul "dom" v GJK konfiguraci PHP.
+
 
 
