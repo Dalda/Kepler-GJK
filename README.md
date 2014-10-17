@@ -56,4 +56,6 @@ Vytváření API pro php skript na GJK serveru => HTTP GET s parametry pro suplo
 Pro parsování je potřeba povolit modul "dom" v GJK konfiguraci PHP.
 
 
+17.10.
 
+Dodělal jsem do aplikace všechny potřebné ikony včetně launcher ikony
