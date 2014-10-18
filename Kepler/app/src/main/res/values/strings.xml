@@ -11,8 +11,8 @@
     <string name="title_settings">Nastavení</string>
 
     <string name="title_navigation_drawer">GJK</string>
-    <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
-    <string name="drawer_close">Zavři navigaci</string> <!-- for accessibility -->
+    <string name="drawer_open">Otevři navigaci</string> <!-- accessibility -->
+    <string name="drawer_close">Zavři navigaci</string> <!-- accessibility -->
 
     <string-array name="navigation_titles">
         <item>@string/title_home</item>
@@ -37,9 +37,33 @@
         <a href="http://gjk.cz/?id=56">Knihovna</a><br />
         <a href="http://gjk.cz/~kupka/">Rozvrh</a><br />
         ]]>
-
     </string>
 
-
+    <string name="pref_food">Podrobnosti o jídle</string>
+    <string name="pref_food_summary">Zobrazovat alergeny u jednotlivých jídel</string>
+    <string name="pref_class">Třída</string>
+    <string name="pref_class_summary">Nastavte třídu, do které na GJK chodíte.</string>
+    <string-array name="pref_class_entries">
+        <item>R1.A</item>
+        <item>R2.A</item>
+        <item>R3.A</item>
+        <item>R4.A</item>
+        <item>R5.A</item>
+        <item>R6.A</item>
+        <item>R7.A</item>
+        <item>R8.A</item>
+        <item>1.A</item>
+        <item>1.B</item>
+        <item>1.C</item>
+        <item>2.A</item>
+        <item>2.B</item>
+        <item>2.C</item>
+        <item>3.A</item>
+        <item>3.B</item>
+        <item>3.C</item>
+        <item>4.A</item>
+        <item>4.B</item>
+        <item>4.C</item>
+    </string-array>
 
 </resources>

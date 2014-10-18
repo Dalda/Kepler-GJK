@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -42,21 +42,20 @@ public class Content extends Fragment {
         int i = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(i){
             case 0:
-                getPage(getString(R.string.domain)+"?type=suplovani&name="+"4.A");
+                String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "4.A");
+                getPage(getString(R.string.domain)+"?type=suplovani&name="+prefClass);
                 break;
             case 1:
-                getPage(getString(R.string.domain)+"?type=jidelna");
+                String prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_food", "false");
+                getPage(getString(R.string.domain)+"?type=jidelna&alergeny="+prefFood);
                 break;
-            case 2:
+            case 2: //odkazy
                 content_text.setTextSize(35);
                 content_text.setGravity(0x01);
                 content_text.setTypeface(null, Typeface.BOLD);
                 content_text.setLineSpacing(1,1);
                 content_text.setMovementMethod(LinkMovementMethod.getInstance());
                 content_text.setText(Html.fromHtml(getString(R.string.links_content)));
-                break;
-            case 3:
-                content_text.setText("Tady bude nastavení (ale v nové aktivitě bez refresh)...");
                 break;
         }
         return rootView;
@@ -88,7 +87,7 @@ public class Content extends Fragment {
     }
 
     private void show(String s){
-        Toast.makeText(parentActivity, "OK mám HTML", Toast.LENGTH_SHORT).show();
+        Toast.makeText(parentActivity, "OK mám HTML", Toast.LENGTH_SHORT).show(); //pozdeji zakomentuj
         content_text.setText(s);
     }
 

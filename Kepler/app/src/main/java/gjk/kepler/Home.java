@@ -2,9 +2,11 @@ package gjk.kepler;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -106,12 +108,17 @@ public class Home extends Activity {
 
     /* Navigation drawer click event */
     private void selectItem(int position) {
-        current = position;
-        createContent(position);
+        if(position == 3) { //položka nastavení
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        } else {
+            current = position;
+            createContent(position);
 
-        myDrawerList.setItemChecked(position, true);
-        setTitle(navigationTitles[position]);
-        myDrawerLayout.closeDrawer(myDrawerList);
+            myDrawerList.setItemChecked(position, true);
+            setTitle(navigationTitles[position]);
+            myDrawerLayout.closeDrawer(myDrawerList);
+        }
     }
 
     /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky */
@@ -141,8 +148,7 @@ public class Home extends Activity {
         }
         //jinak normálně zpracujeme action bar vpravo
         // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
-        int id = item.getItemId();
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.action_refresh:
                 this.createContent(current);
                 return true;
