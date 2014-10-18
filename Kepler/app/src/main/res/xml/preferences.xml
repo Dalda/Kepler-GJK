@@ -7,7 +7,7 @@
             android:summary="@string/pref_class_summary"
             android:entries="@array/pref_class_entries"
             android:entryValues="@array/pref_class_entries"
-            android:defaultValue="4.A" />
+            android:defaultValue="" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_food" >

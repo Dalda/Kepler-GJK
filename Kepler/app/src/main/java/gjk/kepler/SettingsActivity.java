@@ -5,8 +5,12 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity {
+
+    public static final String ARG_ASK = "ask";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,6 +18,10 @@ public class SettingsActivity extends PreferenceActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+
+        if(getIntent().getBooleanExtra(ARG_ASK, false)){
+            Toast.makeText(this, "Nastavte prosím svou třídu.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -42,11 +42,11 @@ public class Content extends Fragment {
         int i = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(i){
             case 0:
-                String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "4.A");
+                String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
                 getPage(getString(R.string.domain)+"?type=suplovani&name="+prefClass);
                 break;
             case 1:
-                String prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_food", "false");
+                Boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
                 getPage(getString(R.string.domain)+"?type=jidelna&alergeny="+prefFood);
                 break;
             case 2: //odkazy
@@ -87,8 +87,7 @@ public class Content extends Fragment {
     }
 
     private void show(String s){
-        Toast.makeText(parentActivity, "OK mám HTML", Toast.LENGTH_SHORT).show(); //pozdeji zakomentuj
-        content_text.setText(s);
+        content_text.setText(Html.fromHtml(s));
     }
 
 }

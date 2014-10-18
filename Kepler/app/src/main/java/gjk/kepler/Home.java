@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,8 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         myDrawerList = (ListView) findViewById(R.id.navigation_drawer);
@@ -70,8 +73,29 @@ public class Home extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        current = 0;
-        selectItem(current); //načti první stránku při prvním spuštění aplikaci
+        current = 0; //nastav první stránku
+    }
+
+    private boolean checkPreferenceSet(){
+        return !("".equals(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "")));
+    }
+    /* Vynucení nastavení GJK třídy uživatele
+    * Je volána po onCreate(Bundle)
+    * Na rozdíl od ní se ale volá i po návratu ze Settings nebo obnovení view této Activity nebo po zrušení pause Activity
+    * */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(!checkPreferenceSet()){ //není nastavené
+            //GJK třída musí být uživatelem nastavená, tak jdeme do nastavení
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(SettingsActivity.ARG_ASK, true); //kvůli Toast message
+            startActivity(intent);
+        }
+        else{
+            selectItem(current); //stáhni stránku vždy po obnovení této Activity
+        }
     }
 
     /* override kvůli aktualizaci ikony navigation draweru kdykoli po activity restore*/
