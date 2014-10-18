@@ -2,8 +2,13 @@ package gjk.kepler;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +42,18 @@ public class Content extends Fragment {
         int i = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(i){
             case 0:
-                getPage(getResources().getString(R.string.domain)+"?type=suplovani&name="+"4.A");
+                getPage(getString(R.string.domain)+"?type=suplovani&name="+"4.A");
                 break;
             case 1:
-                getPage(getResources().getString(R.string.domain)+"?type=jidelna");
+                getPage(getString(R.string.domain)+"?type=jidelna");
                 break;
             case 2:
-                content_text.setText("Study: Docházka: Rozvrh:gjk.cz/~kupka/ Knihovna: Uvod/Aktuality:gjk.cz");
+                content_text.setTextSize(35);
+                content_text.setGravity(0x01);
+                content_text.setTypeface(null, Typeface.BOLD);
+                content_text.setLineSpacing(1,1);
+                content_text.setMovementMethod(LinkMovementMethod.getInstance());
+                content_text.setText(Html.fromHtml(getString(R.string.links_content)));
                 break;
             case 3:
                 content_text.setText("Tady bude nastavení (ale v nové aktivitě bez refresh)...");
@@ -83,10 +93,3 @@ public class Content extends Fragment {
     }
 
 }
-
-/* Nastavení bude ve vytahovaci liste vlevo
-        -bude tam mit ikonu ozubeneho kola
-        -(vse bude s ikonami) - ikona priboru pro obedy apod, podobne jako v gmail, gdocs apod
-     Polozka "Odkazy"
-     O aplikaci - -tato polozka bude primo v aktivite "nastaveni"
-*/

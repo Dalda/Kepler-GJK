@@ -10,6 +10,10 @@
     <string name="title_links">Odkazy</string>
     <string name="title_settings">Nastavení</string>
 
+    <string name="title_navigation_drawer">GJK</string>
+    <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
+    <string name="drawer_close">Zavři navigaci</string> <!-- for accessibility -->
+
     <string-array name="navigation_titles">
         <item>@string/title_home</item>
         <item>@string/title_food</item>
@@ -22,10 +26,20 @@
         <item>@drawable/ic_menu_links</item>
         <item>@drawable/ic_menu_settings</item>
     </string-array>
+
     <string name="domain">http://gjk.cz/~xhajd01/</string>
 
-    <string name="title_navigation_drawer">GJK</string>
-    <string name="drawer_open">Otevři navigaci</string> <!-- for accessibility -->
-    <string name="drawer_close">Zavři navigaci</string> <!-- for accessibility -->
+    <string name="links_content">
+        <![CDATA[
+        <a href="http://gjk.cz">GJK.CZ</a><br />
+        <a href="https://study.gjk.cz">Study</a><br />
+        <a href="http://dochazka.gjk.cz/login.aspx">Docházka</a><br />
+        <a href="http://gjk.cz/?id=56">Knihovna</a><br />
+        <a href="http://gjk.cz/~kupka/">Rozvrh</a><br />
+        ]]>
+
+    </string>
+
+
 
 </resources>
