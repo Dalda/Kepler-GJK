@@ -86,8 +86,6 @@ public class Content extends Fragment {
         }
     }
 
-    private void show(String s){
-        content_text.setText(Html.fromHtml(s));
-    }
+    private void show(String s){ content_text.setText(Html.fromHtml(s)); }
 
 }

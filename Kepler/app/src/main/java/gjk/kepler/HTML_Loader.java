@@ -47,7 +47,7 @@ public class HTML_Loader {
             conn.connect();
             is = conn.getInputStream();
 
-            java.util.Scanner s = new java.util.Scanner(is, "Cp1250").useDelimiter("\\A"); // \\A je konec
+            java.util.Scanner s = new java.util.Scanner(is, "utf-8").useDelimiter("\\A"); // \\A je konec
             String result = s.hasNext() ? s.next() : "";
 
             is.close();
