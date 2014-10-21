@@ -2,13 +2,13 @@ package gjk.kepler;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +42,12 @@ public class Content extends Fragment {
         int i = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(i){
             case 0:
+                content_text.setMovementMethod(new ScrollingMovementMethod());
                 String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
                 getPage(getString(R.string.domain)+"?type=suplovani&name="+prefClass);
                 break;
             case 1:
+                content_text.setMovementMethod(new ScrollingMovementMethod());
                 Boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
                 getPage(getString(R.string.domain)+"?type=jidelna&alergeny="+prefFood);
                 break;
