@@ -9,11 +9,19 @@ Kepler-GJK
 
 Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
 ==========
-- [ ] Dodělat návrh API se specifikací dat jako odpověď na dané GET parametry
-- [ ] Specifikovat UI aplikace, screenshots do složky Docs/
+- [x] Základní Android aplikace s navigací a menu
+- [x] Funkční HTTP GET požadavek ze strany Android aplikace
+- [x] Ikony v Android aplikaci + vytvořen launcher
+- [x] Nastavení preferencí v aplikaci (třída, zobrazování alergenů, ...)
+- [ ] Specifikovat UI aplikace + screenshots do složky Docs/
+- [ ] Návrh API se specifikací dat jako odpověď na dané GET parametry (master/GJK_API/index.php)
+- [ ] Vytvořit API endpoint v PHP
+- [ ] Vytvořit notifikace v Android aplikaci - pokud bude čas
+- [ ] Závěrečné publikování aplikace na Google Play
+
 ==========
 ## Changelog
-Skutečné změny v projektu jsou v git historii commitů
+*Skutečné změny v projektu jsou v git historii commitů*
 
 * 30.9. 
 	* Zjišťování toho, v čem budu aplikaci vytvářet a jaké nástroje budu potřebovat
