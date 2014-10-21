@@ -17,7 +17,6 @@ Specifikovat UI aplikace, screenshots apod.
 Changelog
 
 Skutečné změny v projektu jsou v git historii commitů
-Zde je popsána práce v hodině
 
 30.9. 
 
@@ -59,3 +58,7 @@ Pro parsování je potřeba povolit modul "dom" v GJK konfiguraci PHP.
 17.10.
 
 Dodělal jsem do aplikace všechny potřebné ikony včetně launcher ikony
+
+21.10.
+
+Zařazení alergenů do návrhu vrácených dat z API endpointu
