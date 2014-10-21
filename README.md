@@ -7,7 +7,7 @@ Kepler-GJK
 
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
-Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
+Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
 
 - [x] Základní Android aplikace s navigací a menu
 - [x] Funkční HTTP GET požadavek ze strany Android aplikace
