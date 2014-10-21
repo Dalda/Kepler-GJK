@@ -14,7 +14,7 @@ Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho roz
 - [x] Ikony v Android aplikaci + vytvořen launcher
 - [x] Nastavení preferencí v aplikaci (třída, zobrazování alergenů, ...)
 - [ ] Specifikovat UI aplikace + screenshots do složky Docs/
-- [ ] Návrh API se specifikací dat jako odpověď na dané GET parametry (master/GJK_API/index.php)
+- [ ] [Návrh API](https://github.com/Dalda/Kepler-GJK/blob/master/GJK_API/index.php) se specifikací dat jako odpověď na dané GET parametry 
 - [ ] Vytvořit API endpoint v PHP
 - [ ] Vytvořit notifikace v Android aplikaci - pokud bude čas
 - [ ] Závěrečné publikování aplikace na Google Play
