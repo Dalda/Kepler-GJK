@@ -1,34 +1,31 @@
 Kepler-GJK
 ==========
 
-Autor: Dalimil Hájek
+*Autor:* Dalimil Hájek
 
-Maturitní projekt z informatiky.
+**Maturitní projekt z informatiky.**
 
-Android aplikace pro Gymnázium Jana Keplera. 
+**Android aplikace pro Gymnázium Jana Keplera. **
+
+[Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
 Cílem je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
 
 ==========
-Dodělat návrh API se specifikací dat jako odpověď na dané GET parametry
-Specifikovat UI aplikace, screenshots apod.
+- [ ] Dodělat návrh API se specifikací dat jako odpověď na dané GET parametry
+- [ ] Specifikovat UI aplikace, screenshots do složky Docs/
 
 ==========
-Changelog
+## Changelog
 
 Skutečné změny v projektu jsou v git historii commitů
 
-30.9. 
-
-Zjišťování toho, v čem budu aplikaci vytvářet a jaké nástroje budu potřebovat
-
-2.10.
-
-Zjištění stavu Bakalářů, výstupním souborem je vždy HTML tabulka.
-
-7.10.
-
-Učení se vytváření aplikace pro operační systém Android (Activities, UIs, XML, resources).
+* 30.9. 
+	* Zjišťování toho, v čem budu aplikaci vytvářet a jaké nástroje budu potřebovat
+* 2.10.
+	* Zjištění stavu Bakalářů, výstupním souborem je vždy HTML tabulka.
+* 7.10.
+	*Učení se vytváření aplikace pro operační systém Android (Activities, UIs, XML, resources).
 
 8.10.
 
