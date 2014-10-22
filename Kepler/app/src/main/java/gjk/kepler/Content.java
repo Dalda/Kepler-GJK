@@ -44,7 +44,7 @@ public class Content extends Fragment {
             case 0:
                 content_text.setMovementMethod(new ScrollingMovementMethod());
                 String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
-                getPage(getString(R.string.domain)+"?type=suplovani&name="+prefClass);
+                getPage(getString(R.string.domain)+"?type=suplovani&trida="+prefClass);
                 break;
             case 1:
                 content_text.setMovementMethod(new ScrollingMovementMethod());
