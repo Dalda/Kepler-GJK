@@ -4,6 +4,7 @@ SPECIFIKACE API
 Dočasná doména (openshift platform): http://kepler-dalimil.rhcloud.com
 
 HTTP GET
+Odpověď jsou data v JSON formátu, která může aplikace dále zpracovávat.
 
 parametry:
 	type= 
@@ -13,26 +14,36 @@ parametry:
 
 
 	type=suplovani
-		&name=4.A
+		&trida=4.A
 		(string - povinné, default není)
-		/** Pokud je specifikován type "suplovani", musí být uveden parametr "name", což je GJK třída 
+		/** Pokud je specifikován type "suplovani", musí být uveden parametr "trida", což je GJK třída 
 		 *  Ta je nastavena uživatelem v nastavení aplikace z nabídky R{1..8}.A {1..4}.{A..C} a je to povinný údaj
 		 */
 
-		ODPOVĚĎ PHP skriptu (např. pro ?type=suplovani&name=1.A):
+		ODPOVĚĎ PHP skriptu (např. pro ?type=suplovani&trida=1.A):
+			JSON
+				{
+					"type": "suplovani",
+					"trida": "1.A",
+					"dny":[
+						{
+							"den": "Čtvrtek 23.10.2014 (lichý týden)",
+							"zmeneno": "22.10.2014 (14:17)",
+							"hodiny":[
+								{"hodina": 4, "predmet": "Nj NF4", "zmena": "(PCH) supluje Kučera František (Šma)"},
+								{"hodina": 6, "predmet": "Lab lab2", "zmena": "odpadá (Koc)"},
+								...
+							]
+						},
 
-				Středa 22.10.2014 (lichý týden)
-				1.A 4.hod Fj FN1 odpadá (Pan)
+						{
+							"den": "Pátek 24.10.2014 (lichý týden)",
+							...
+						},
 
-				Čtvrtek 23.10.2014 (lichý týden)
-				1.A 1.hod HSt (H2.3) přesun Kolář Jan z (17.10. 4.hod)
-
-			Respektive jednoduché HTML, které může android aplikace v TextView (jen několik formátovacích tagů) přímo zobrazit.
-				Třída: 1.A<br />
-				<h5>Středa 22.10.2014  (lichý týden)</h5>
-				1.A   4.hod   Fj   FN1      odpadá      (Pan)   <br /><br />
-				<h5>Čtvrtek 23.10.2014  (lichý týden)</h5>
-				1.A   1.hod   HSt      (H2.3)   přesun   Kolář Jan   z  (17.10. 4.hod)   <br /><br />
+						...
+					]
+				}
 
 
 	type=jidelna
@@ -44,38 +55,31 @@ parametry:
 		 */
 
 		 ODPOVĚĎ PHP skriptu (např. pro ?type=jidelna&alergeny=1):
+		 	JSON
+		 		{
+		 			"type": "jidelna",
+		 			"alergeny": 1,
+		 			"dny":[
+		 				{
+			 				"den": "Pondělí 20.10.",
+			 				"polevka": {"Krupicová s vejcem", "alergeny": "lepek, vejce, mléko, celer"},
+			 				"jidla":[
+			 					{"nazev": "Kuřecí maso na paprice, dušená rýže", "alergeny": "lepek, mléko"},
+			 					{"nazev": "Zapečené šunkové flíčky, okurka", "alergeny": "lepek, vejce, mléko"},
+			 					...
+			 				]
+			 			},
 
-			 	Pondělí 20.10.
+			 			{
+			 				"den": "Úterý 21.10.",
+			 				...
+			 			},
 
-				Polévka: Krupicová s vejcem
-					Alergeny: lepek, vejce, mléko, celer
-				1) Kuřecí maso na paprice, dušená rýže
-					Alergeny: lepek, mléko
-				2) Zapečené šunkové flíčky, okurka
-					Alergeny: lepek, vejce, mléko
-				3) Bramborové placičky se špenátem
-					Alergeny: lepek, vejce, mléko
+			 			...
 
-				Úterý 21.10.
+		 			]
+		 		}
 
-				Polévka: Dýňová 
-				...
-				...
 
-			Respektive jednoduché HTML, které může android aplikace v TextView (povoleno jen několik formátovacích tagů) přímo zobrazit.
-
-				<h5>Pondělí 20.10.</h5>
-				<i>Polévka:</i> Krupicová s vejcem <br />
-				Alergeny: lepek, vejce, mléko, celer<br />
-				<i>1)</i> Kuřecí maso na paprice, dušená rýže<br />
-				Alergeny: lepek, mléko<br />
-				<i>2)</i> Zapečené šunkové flíčky, okurka<br />
-				Alergeny: lepek, vejce, mléko<br />
-				<i>3)</i> Bramborové placičky se špenátem <br />
-				Alergeny: lepek, vejce, mléko<br />
-				<br />
-				<h5>Úterý 21.10.</h5>
-				<i>Polévka:</i> Dýňová
-				...
-				...
+			(pro alergeny=0 nebudou páry string:string "alergeny":"lepek, vejce, mléko" (apod.) uvedeny)
 
