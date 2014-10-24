@@ -28,7 +28,7 @@ parametry:
 					"dny":[
 						{
 							"den": "Čtvrtek 23.10.2014 (lichý týden)",
-							"zmeneno": "22.10.2014 (14:17)",
+							"info": "Dnes se koná burza učebnic.",
 							"hodiny":[
 								{"hodina": 4, "predmet": "Nj NF4", "zmena": "(PCH) supluje Kučera František (Šma)"},
 								{"hodina": 6, "predmet": "Lab lab2", "zmena": "odpadá (Koc)"},
