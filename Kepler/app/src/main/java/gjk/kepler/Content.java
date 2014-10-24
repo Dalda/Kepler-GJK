@@ -107,7 +107,7 @@ public class Content extends Fragment {
                 result = "Chyba v požadavku.";
                 break;
         }
-        content_text.setText(result);
+        content_text.setText(Html.fromHtml(result));
 
     }
 
@@ -117,13 +117,14 @@ public class Content extends Fragment {
             if (res.getString("type").equals(content_types[type])) {
                 StringBuilder sb = new StringBuilder();
                 String trida = res.getString("trida");
-                sb.append("<h4>Třída: " + trida + "</h4><br />");
+                sb.append("<h5>Třída " + trida + "</h5>");
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = 0; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
                     String den = ob.getString("den");
-                    sb.append("<h5>" + den + "</h5><br />");
-                    String zmeneno = ob.getString("zmeneno");
+                    sb.append("<h5>" + den + "</h5>");
+                    String info = ob.getString("info");
+                    if(!info.equals("")) sb.append("<i>"+info+"</i><br />");
 
                     JSONArray hodiny = ob.getJSONArray("hodiny");
                     for (int j = 0; j < hodiny.length(); j++) {
@@ -131,7 +132,10 @@ public class Content extends Fragment {
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-                        sb.append("<b>" + hodina + "</b>" + predmet + zmena + "<br />");
+                        sb.append("<b>" + hodina + ".hod</b> " + predmet +" -> "+zmena + "<br />");
+                    }
+                    if(hodiny.length() == 0){
+                        sb.append("Žádné suplování<br />");
                     }
                 }
                 return sb.toString();
@@ -153,12 +157,12 @@ public class Content extends Fragment {
                 for (int i = 0; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
                     String den = ob.getString("den");
-                    sb.append("<h5>" + den + "</h5><br />");
+                    sb.append("<h5>" + den + "</h5>");
                     JSONObject polevka = ob.getJSONObject("polevka");
                     String polevkaNazev = polevka.getString("nazev");
                     String polevkaAlergeny = polevka.getString("alergeny");
                     sb.append("<b>Polévka: </b>"+polevkaNazev+"<br />");
-                    if(prefFood) sb.append("Alergeny:<i>" + polevkaAlergeny + "</i><br />");
+                    if(prefFood) sb.append("<i>\t\tAlergeny: " + polevkaAlergeny+ "</i><br />");
 
                     JSONArray jidla = ob.getJSONArray("jidla");
                     for (int j = 0; j < jidla.length(); j++) {
@@ -166,7 +170,7 @@ public class Content extends Fragment {
                         String nazev = jidlo.getString("nazev");
                         String alergeny = jidlo.getString("alergeny");
                         sb.append("<b>"+(j+1)+")</b> "+nazev+"<br />");
-                        if(prefFood) sb.append("Alergeny:<i>" + alergeny + "</i><br />");
+                        if(prefFood) sb.append("<i>\t\tAlergeny: " + alergeny + "</i><br />");
                     }
                 }
                 return sb.toString();
