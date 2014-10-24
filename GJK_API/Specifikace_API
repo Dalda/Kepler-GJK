@@ -47,18 +47,14 @@ parametry:
 
 
 	type=jidelna
-		&alergeny=0
-		(boolean - povinné, default=0)
-		/** Pokud je specifikován type "jidelna", musí být uveden parametr "alergeny", což je povinný údaj
-		 *  Pokud alergeny=1, spolu s jídelníčkem se vypíšou k jednotlivým jídlům i alergeny
-		 *  Tato hodnota je nastavena uživatelem v nastavení aplikace (checkbox ano/ne)
+		/** Pro type "jidelna" je vrácen jídelníček školní jídelny spolu s alergeny u jednotlivých jídel. 
+		 *	O zobrazení/nezobrazení alergenů se stará Android aplikace
 		 */
 
-		 ODPOVĚĎ PHP skriptu (např. pro ?type=jidelna&alergeny=1):
+		 ODPOVĚĎ PHP skriptu (např. pro ?type=jidelna):
 		 	JSON
 		 		{
 		 			"type": "jidelna",
-		 			"alergeny": 1,
 		 			"dny":[
 		 				{
 			 				"den": "Pondělí 20.10.",
@@ -79,7 +75,4 @@ parametry:
 
 		 			]
 		 		}
-
-
-			(pro alergeny=0 nebudou páry string:string "alergeny":"lepek, vejce, mléko" (apod.) uvedeny)
 
