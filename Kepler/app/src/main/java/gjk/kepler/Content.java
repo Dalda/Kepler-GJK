@@ -101,7 +101,7 @@ public class Content extends Fragment {
                 result = getSuplovani(s);
                 break;
             case 1:
-                //result = getJidelna(s);
+                result = getJidelna(s);
                 break;
             default:
                 result = "Chyba v požadavku.";
@@ -143,5 +143,39 @@ public class Content extends Fragment {
         }
     }
 
+    private String getJidelna(String s){
+        boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
+        try {
+            JSONObject res = new JSONObject(s);
+            if (res.getString("type").equals(content_types[type])) {
+                StringBuilder sb = new StringBuilder();
+                JSONArray dny = res.getJSONArray("dny");
+                for (int i = 0; i < dny.length(); i++) {
+                    JSONObject ob = dny.getJSONObject(i);
+                    String den = ob.getString("den");
+                    sb.append("<h5>" + den + "</h5><br />");
+                    JSONObject polevka = ob.getJSONObject("polevka");
+                    String polevkaNazev = polevka.getString("nazev");
+                    String polevkaAlergeny = polevka.getString("alergeny");
+                    sb.append("<b>Polévka: </b>"+polevkaNazev+"<br />");
+                    if(prefFood) sb.append("Alergeny:<i>" + polevkaAlergeny + "</i><br />");
+
+                    JSONArray jidla = ob.getJSONArray("jidla");
+                    for (int j = 0; j < jidla.length(); j++) {
+                        JSONObject jidlo = jidla.getJSONObject(j);
+                        String nazev = jidlo.getString("nazev");
+                        String alergeny = jidlo.getString("alergeny");
+                        sb.append("<b>"+(j+1)+")</b> "+nazev+"<br />");
+                        if(prefFood) sb.append("Alergeny:<i>" + alergeny + "</i><br />");
+                    }
+                }
+                return sb.toString();
+            } else {
+                return "Chyba pří načítání jídelny.";
+            }
+        }catch(JSONException e){
+            return "Chyba pří načítání jídelny.";
+        }
+    }
 
 }
