@@ -58,7 +58,7 @@ parametry:
 		 			"dny":[
 		 				{
 			 				"den": "Pondělí 20.10.",
-			 				"polevka": {"Krupicová s vejcem", "alergeny": "lepek, vejce, mléko, celer"},
+			 				"polevka": {"nazev": "Krupicová s vejcem", "alergeny": "lepek, vejce, mléko, celer"},
 			 				"jidla":[
 			 					{"nazev": "Kuřecí maso na paprice, dušená rýže", "alergeny": "lepek, mléko"},
 			 					{"nazev": "Zapečené šunkové flíčky, okurka", "alergeny": "lepek, vejce, mléko"},
