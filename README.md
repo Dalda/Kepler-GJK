@@ -14,7 +14,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [x] Ikony v Android aplikaci + vytvořen launcher
 - [x] Nastavení preferencí v aplikaci (třída, zobrazování alergenů, ...)
 - [ ] Specifikovat UI aplikace + screenshots do složky Docs/
-- [ ] [Návrh API](https://github.com/Dalda/Kepler-GJK/blob/master/GJK_API/Specifikace_API) se specifikací dat jako odpověď na dané GET parametry 
+- [x] [Návrh API](https://github.com/Dalda/Kepler-GJK/blob/master/GJK_API/Specifikace_API) se specifikací dat jako odpověď na dané GET parametry 
 - [ ] Vytvořit API endpoint v PHP
 - [ ] Vytvořit notifikace v Android aplikaci - pokud bude čas
 - [ ] Závěrečné publikování aplikace na Google Play
@@ -45,3 +45,6 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 * 21.10.
 	* Zařazení alergenů do návrhu vrácených dat z API endpointu
 	* Mastering Markdown syntax
+* 24.10.
+	* Předělání a dokončení API pro JSON formát
+	* Implementace čtení JSON dat a komunikace s PHP endpointem v Android aplikaci
