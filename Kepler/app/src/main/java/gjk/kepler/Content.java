@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 public class Content extends Fragment {
 
     public static final String ARG_CONTENT_NUMBER = "content_number";
@@ -132,7 +134,7 @@ public class Content extends Fragment {
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-                        sb.append("<b>" + hodina + ".hod</b> " + predmet +" -> "+zmena + "<br />");
+                        sb.append("<b>" + hodina + ".hod\t" + predmet +"</b><br />\t\t"+zmena + "<br />");
                     }
                     if(hodiny.length() == 0){
                         sb.append("Žádné suplování<br />");
@@ -165,7 +167,12 @@ public class Content extends Fragment {
                     if(prefFood) sb.append("<i>\t\tAlergeny: " + polevkaAlergeny+ "</i><br />");
 
                     JSONArray jidla = ob.getJSONArray("jidla");
-                    for (int j = 0; j < jidla.length(); j++) {
+                    Calendar calendar = Calendar.getInstance();
+                    int day_of_week = calendar.get(Calendar.DAY_OF_WEEK); //sobota 7 nedele 1 pondeli 2
+                    if(day_of_week == 1 || day_of_week == 7) day_of_week = 0;
+                    else day_of_week -= 2;
+
+                    for (int j = day_of_week; j < jidla.length(); j++) {
                         JSONObject jidlo = jidla.getJSONObject(j);
                         String nazev = jidlo.getString("nazev");
                         String alergeny = jidlo.getString("alergeny");
