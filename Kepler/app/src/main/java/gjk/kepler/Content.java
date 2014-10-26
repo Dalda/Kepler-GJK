@@ -127,11 +127,8 @@ public class Content extends Fragment {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
 
-                TextView tr = new TextView(parentActivity);
-                tr.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Headline);
                 String trida = res.getString("trida");
-                tr.setText("Třída " + trida);
-                content_layout.addView(tr);
+                createTextView("Třída " + trida, false, R.style.TextAppearance_AppCompat_Headline);
 
                 //divider
                 TextView divider = new TextView(parentActivity);
@@ -147,18 +144,11 @@ public class Content extends Fragment {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
-                    TextView denTV = new TextView(parentActivity);
-                    denTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Title);
-                    denTV.setTextColor(getResources().getColor(R.color.accent));
-                    denTV.setText(den);
-                    content_layout.addView(denTV);
+                    createTextView(den, false, R.style.TextAppearance_AppCompat_Title, R.color.accent);
 
-                    TextView infoTV = new TextView(parentActivity);
-                    infoTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Caption);
                     String info = ob.getString("info");
                     if(!info.equals("")){
-                        infoTV.setText(info);
-                        content_layout.addView(infoTV);
+                        createTextView(info, false, R.style.TextAppearance_AppCompat_Caption);
                     }
 
                     StringBuilder sb = new StringBuilder();
@@ -173,10 +163,7 @@ public class Content extends Fragment {
                     if(hodiny.length() == 0){
                         sb.append("Žádné suplování<br />");
                     }
-                    TextView hodinyTV = new TextView(parentActivity);
-                    hodinyTV.setTextAppearance(parentActivity, R.style.Base_TextAppearance_AppCompat_Body1);
-                    hodinyTV.setText(Html.fromHtml(sb.toString()));
-                    content_layout.addView(hodinyTV);
+                    createTextView(sb.toString(), true, R.style.TextAppearance_AppCompat_Body1);
                 }
 
                 return "";
@@ -193,17 +180,21 @@ public class Content extends Fragment {
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
-                StringBuilder sb = new StringBuilder();
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = 0; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
+
                     String den = ob.getString("den");
-                    sb.append("<h5>" + den + "</h5>");
+                    createTextView(den, false, R.style.TextAppearance_AppCompat_Title, R.color.accent);
+
                     JSONObject polevka = ob.getJSONObject("polevka");
                     String polevkaNazev = polevka.getString("nazev");
-                    String polevkaAlergeny = polevka.getString("alergeny");
-                    sb.append("<b>Polévka: </b>"+polevkaNazev+"<br />");
-                    if(prefFood) sb.append("<i>\t\tAlergeny: " + polevkaAlergeny+ "</i><br />");
+                    createTextView("<b>Polévka: </b>"+polevkaNazev, true, R.style.TextAppearance_AppCompat_Body1);
+
+                    if(prefFood){
+                        String polevkaAlergeny = polevka.getString("alergeny");
+                        createTextView("Alergeny: " + polevkaAlergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                    }
 
                     JSONArray jidla = ob.getJSONArray("jidla");
                     Calendar calendar = Calendar.getInstance();
@@ -214,12 +205,14 @@ public class Content extends Fragment {
                     for (int j = day_of_week; j < jidla.length(); j++) {
                         JSONObject jidlo = jidla.getJSONObject(j);
                         String nazev = jidlo.getString("nazev");
-                        String alergeny = jidlo.getString("alergeny");
-                        sb.append("<b>"+(j+1)+")</b> "+nazev+"<br />");
-                        if(prefFood) sb.append("<i>\t\tAlergeny: " + alergeny + "</i><br />");
+                        createTextView("<b>"+(j+1)+")</b> "+nazev, true, R.style.TextAppearance_AppCompat_Body1);
+                        if(prefFood){
+                            String alergeny = jidlo.getString("alergeny");
+                            createTextView("Alergeny: "+alergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                        }
                     }
                 }
-                return sb.toString();
+                return "";
             } else {
                 return "Chyba pří načítání jídelny";
             }
@@ -228,4 +221,20 @@ public class Content extends Fragment {
         }
     }
 
+    private void createTextView(String s, boolean html, int resid){
+        TextView myTV = new TextView(parentActivity);
+        myTV.setTextAppearance(parentActivity, resid);
+        if(html) myTV.setText(Html.fromHtml(s));
+        else myTV.setText(s);
+        content_layout.addView(myTV);
+    }
+
+    private void createTextView(String s, boolean html, int resid, int colorid){
+        TextView myTV = new TextView(parentActivity);
+        myTV.setTextAppearance(parentActivity, resid);
+        myTV.setTextColor(getResources().getColor(colorid));
+        if(html) myTV.setText(Html.fromHtml(s));
+        else myTV.setText(s);
+        content_layout.addView(myTV);
+    }
 }
