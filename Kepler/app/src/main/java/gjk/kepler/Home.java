@@ -1,6 +1,5 @@
 package gjk.kepler;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,7 +7,9 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class Home extends Activity {
+public class Home extends ActionBarActivity {
 
     private int current; //Nutný pro refresh akci v action baru
 
@@ -32,6 +33,10 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -56,22 +61,19 @@ public class Home extends Activity {
                 /** Zavolá se teprve když je navigation drawer úplně zavřený */
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);
-                    getActionBar().setTitle(getTitle());
+                    getSupportActionBar().setTitle(getTitle());
                     invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
                 }
                 /** Zavolá se teprve když je navigation drawer úplně otevřený */
                 public void onDrawerOpened(View drawerView) {
                     super.onDrawerOpened(drawerView);
-                    getActionBar().setTitle(R.string.title_navigation_drawer);
+                    getSupportActionBar().setTitle(R.string.title_navigation_drawer);
                     invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
                 }
             };
 
         // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
         myDrawerLayout.setDrawerListener(myDrawerToggle);
-        // Nastaví app icon jako toggle pro navigation drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
 
         current = 0; //nastav první stránku
     }

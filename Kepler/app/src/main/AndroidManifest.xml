@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/BlueActionBarTheme" >
+        android:theme="@style/AppTheme" >
 
         <activity
             android:name=".Home"
@@ -23,7 +23,9 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_settings" >
+            android:label="@string/title_settings"
+
+            android:parentActivityName=".Home">
             <!-- Zpětná navigace v hiearchii -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
