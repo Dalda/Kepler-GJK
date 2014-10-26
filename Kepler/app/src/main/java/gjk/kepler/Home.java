@@ -19,7 +19,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class Home extends ActionBarActivity {
+public class Home extends BaseActivity {
 
     private int current; //Nutný pro refresh akci v action baru
 
@@ -29,14 +29,14 @@ public class Home extends ActionBarActivity {
     private ListView myDrawerList;
     private ActionBarDrawerToggle myDrawerToggle;
 
+    @Override protected int getLayoutResource() {
+        return R.layout.activity_home;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //set Content View se provede v BaseActivity
 
         //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
