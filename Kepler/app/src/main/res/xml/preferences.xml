@@ -8,6 +8,11 @@
             android:entries="@array/pref_class_entries"
             android:entryValues="@array/pref_class_entries"
             android:defaultValue="" />
+        <CheckBoxPreference
+            android:key="pref_notify"
+            android:title="@string/pref_notify"
+            android:summary="@string/pref_notify_summary"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_food" >

@@ -41,6 +41,8 @@
 
     <string name="pref_food">Podrobnosti o jídle</string>
     <string name="pref_food_summary">Zobrazovat alergeny u jednotlivých jídel</string>
+    <string name="pref_notify">Notifikace</string>
+    <string name="pref_notify_summary">Dostávat notifikace o změnách suplování.</string>
     <string name="pref_class">Třída</string>
     <string name="pref_class_summary">Nastavte třídu, do které na GJK chodíte.</string>
     <string-array name="pref_class_entries">

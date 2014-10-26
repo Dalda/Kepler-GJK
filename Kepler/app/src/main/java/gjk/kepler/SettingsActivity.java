@@ -19,7 +19,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
 
-        if(getIntent().getBooleanExtra(ARG_ASK, false)){
+        if(getIntent().getBooleanExtra(ARG_ASK, false)){ //default=false
             Toast.makeText(this, "Nastavte prosím svou třídu.", Toast.LENGTH_LONG).show();
         }
     }
