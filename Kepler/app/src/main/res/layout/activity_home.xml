@@ -12,7 +12,8 @@
         <!-- Horní lišta -->
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"/>
+            layout="@layout/toolbar"
+            />
 
         <!-- Hlavní obsah obrazovky,-->
         <FrameLayout
@@ -33,6 +34,7 @@
         android:choiceMode="singleChoice"
         android:divider="@color/primaryLight"
         android:dividerHeight="1dp"
-        android:background="@color/primary"/>
+        android:background="@color/primary"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"/>
 
 </android.support.v4.widget.DrawerLayout>

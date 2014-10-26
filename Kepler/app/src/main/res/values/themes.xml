@@ -5,13 +5,13 @@
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
-
+        <item name="colorAccent">@color/accent</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
     </style>
 
     <color name="primary">#3F51B5</color>
     <color name="primaryDark">#303f9f</color>
     <color name="primaryLight">#7986cb</color>
-    <color name="alter"> #e91e63</color>
+    <color name="accent">#f50057</color>
     <color name="white">#ffffff</color>
 </resources>
