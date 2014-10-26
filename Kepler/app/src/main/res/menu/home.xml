@@ -1,6 +1,4 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Home" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--Tlačítko aktualizovat v liště (action bar)- vpravo jediné-->
     <item android:id="@+id/action_refresh"

@@ -66,6 +66,7 @@ public class Home extends Activity {
                     invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
                 }
             };
+
         // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
         myDrawerLayout.setDrawerListener(myDrawerToggle);
         // Nastaví app icon jako toggle pro navigation drawer
@@ -78,10 +79,10 @@ public class Home extends Activity {
     private boolean checkPreferenceSet(){
         return !("".equals(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "")));
     }
-    /* Vynucení nastavení GJK třídy uživatele
+   /** Vynucení nastavení GJK třídy uživatele
     * Je volána po onCreate(Bundle)
     * Na rozdíl od ní se ale volá i po návratu ze Settings nebo obnovení view této Activity nebo po zrušení pause Activity
-    * */
+    */
     @Override
     protected void onResume() {
         super.onResume();
