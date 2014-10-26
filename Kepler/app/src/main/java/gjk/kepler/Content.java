@@ -12,6 +12,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ public class Content extends Fragment {
 
     private Activity parentActivity;
     private HTML_Loader html_loader;
-    private TextView content_text;
+    private LinearLayout content_layout;
     private int type;
 
     private static final String content_types[] = {"suplovani", "jidelna", "odkazy"};
@@ -46,26 +47,29 @@ public class Content extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_content, container, false);
-        content_text = (TextView) rootView.findViewById(R.id.text_content);
+        content_layout = (LinearLayout) rootView.findViewById(R.id.content_layout);
 
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
             case 0:
-                content_text.setMovementMethod(new ScrollingMovementMethod());
+                //content_text.setMovementMethod(new ScrollingMovementMethod());
                 String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
                 getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
                 break;
             case 1:
-                content_text.setMovementMethod(new ScrollingMovementMethod());
+                //content_text.setMovementMethod(new ScrollingMovementMethod());
                 getPage(getString(R.string.domain)+"?type="+content_types[type]);
                 break;
             case 2: //odkazy
+                TextView content_text = new TextView(parentActivity);
                 content_text.setTextSize(35);
+                content_text.setLinkTextColor(R.color.primaryDark);
                 content_text.setGravity(0x01);
                 content_text.setTypeface(null, Typeface.BOLD);
                 content_text.setLineSpacing(1,1);
                 content_text.setMovementMethod(LinkMovementMethod.getInstance());
                 content_text.setText(Html.fromHtml(getString(R.string.links_content)));
+                content_layout.addView(content_text);
                 break;
         }
         return rootView;
@@ -109,7 +113,10 @@ public class Content extends Fragment {
                 result = "Chyba v požadavku";
                 break;
         }
-        content_text.setText(Html.fromHtml(result));
+        TextView er = new TextView(parentActivity);
+        er.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Medium);
+        er.setText(Html.fromHtml(result));
+        content_layout.addView(er);
 
     }
 
