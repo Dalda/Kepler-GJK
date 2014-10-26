@@ -77,7 +77,7 @@ public class Content extends Fragment {
             new DownloadWebpageTask().execute(myURL);
         }else{
             //není připojení
-            Toast.makeText(parentActivity, "Nejste připojeni k internetu.", Toast.LENGTH_LONG).show();
+            Toast.makeText(parentActivity, "Nejste připojeni k internetu", Toast.LENGTH_LONG).show();
         }
     }
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
@@ -106,7 +106,7 @@ public class Content extends Fragment {
                 result = getJidelna(s);
                 break;
             default:
-                result = "Chyba v požadavku.";
+                result = "Chyba v požadavku";
                 break;
         }
         content_text.setText(Html.fromHtml(result));
@@ -142,10 +142,10 @@ public class Content extends Fragment {
                 }
                 return sb.toString();
             } else {
-                return "Chyba pří načítání suplování.";
+                return "Chyba pří načítání suplování";
             }
         }catch(JSONException e){
-            return "Chyba pří načítání suplování.";
+            return "Chyba pří načítání suplování";
         }
     }
 
@@ -182,10 +182,10 @@ public class Content extends Fragment {
                 }
                 return sb.toString();
             } else {
-                return "Chyba pří načítání jídelny.";
+                return "Chyba pří načítání jídelny";
             }
         }catch(JSONException e){
-            return "Chyba pří načítání jídelny.";
+            return "Chyba pří načítání jídelny";
         }
     }
 

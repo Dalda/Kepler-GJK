@@ -7,8 +7,8 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +32,7 @@ public class Home extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -51,8 +52,7 @@ public class Home extends Activity {
 
         // Zareagovat na kliknutí
         myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        myDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout,
-                R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_close) {
+        myDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
                 /** Zavolá se teprve když je navigation drawer úplně zavřený */
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);

@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- extend one of the Theme.AppCompat themes
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303f9f</item>
+        <item name="colorAccent">#ffcc80</item>
+    </style>
+    -->
     <!-- vzhled aplikující se na celou aplikaci nebo jen aktivitu -->
     <style name="BlueActionBarTheme"
-        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/BlueActionBar</item>
     </style>
 
     <!-- styl horní lišty -->
     <style name="BlueActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">#335599</item>
+        <item name="android:background">#3F51B5</item>
     </style>
 
 
