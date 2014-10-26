@@ -1,5 +1,6 @@
 package gjk.kepler;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -63,7 +65,7 @@ public class Content extends Fragment {
             case 2: //odkazy
                 TextView content_text = new TextView(parentActivity);
                 content_text.setTextSize(35);
-                content_text.setLinkTextColor(R.color.primaryDark);
+                content_text.setLinkTextColor(getResources().getColor(R.color.primaryDark));
                 content_text.setGravity(0x01);
                 content_text.setTypeface(null, Typeface.BOLD);
                 content_text.setLineSpacing(1,1);
@@ -124,30 +126,60 @@ public class Content extends Fragment {
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
-                StringBuilder sb = new StringBuilder();
+
+                TextView tr = new TextView(parentActivity);
+                tr.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Headline);
                 String trida = res.getString("trida");
-                sb.append("<h5>Třída " + trida + "</h5>");
+                tr.setText("Třída " + trida);
+                content_layout.addView(tr);
+
+                //divider
+                TextView divider = new TextView(parentActivity);
+                divider.setBackgroundColor(getResources().getColor(R.color.accent));
+                divider.setHeight(1);
+                content_layout.addView(divider);
+                TextView div2 = new TextView(parentActivity);
+                div2.setLines(1);
+                content_layout.addView(div2);
+
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = 0; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
-                    String den = ob.getString("den");
-                    sb.append("<h5>" + den + "</h5>");
-                    String info = ob.getString("info");
-                    if(!info.equals("")) sb.append("<i>"+info+"</i><br />");
 
+                    String den = ob.getString("den");
+                    TextView denTV = new TextView(parentActivity);
+                    denTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Title);
+                    denTV.setTextColor(getResources().getColor(R.color.accent));
+                    denTV.setText(den);
+                    content_layout.addView(denTV);
+
+                    TextView infoTV = new TextView(parentActivity);
+                    infoTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Caption);
+                    String info = ob.getString("info");
+                    if(!info.equals("")){
+                        infoTV.setText(info);
+                        content_layout.addView(infoTV);
+                    }
+
+                    StringBuilder sb = new StringBuilder();
                     JSONArray hodiny = ob.getJSONArray("hodiny");
                     for (int j = 0; j < hodiny.length(); j++) {
                         JSONObject hod = hodiny.getJSONObject(j);
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-                        sb.append("<b>" + hodina + ".hod\t" + predmet +"</b><br />\t\t"+zmena + "<br />");
+                        sb.append("<b>" + hodina + ".hod\t" + predmet +"</b>\t\t\t"+zmena + "<br />");
                     }
                     if(hodiny.length() == 0){
                         sb.append("Žádné suplování<br />");
                     }
+                    TextView hodinyTV = new TextView(parentActivity);
+                    hodinyTV.setTextAppearance(parentActivity, R.style.Base_TextAppearance_AppCompat_Body1);
+                    hodinyTV.setText(Html.fromHtml(sb.toString()));
+                    content_layout.addView(hodinyTV);
                 }
-                return sb.toString();
+
+                return "";
             } else {
                 return "Chyba pří načítání suplování";
             }
