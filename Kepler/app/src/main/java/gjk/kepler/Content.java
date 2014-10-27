@@ -3,6 +3,7 @@ package gjk.kepler;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,11 +65,9 @@ public class Content extends Fragment {
                 break;
             case 2: //odkazy
                 TextView content_text = new TextView(parentActivity);
-                content_text.setTextSize(35);
-                content_text.setLinkTextColor(getResources().getColor(R.color.primaryDark));
                 content_text.setGravity(0x01);
-                content_text.setTypeface(null, Typeface.BOLD);
-                content_text.setLineSpacing(1,1);
+                content_text.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Display1);
+                content_text.setLinkTextColor(getResources().getColor(R.color.primaryDark));
                 content_text.setMovementMethod(LinkMovementMethod.getInstance());
                 content_text.setText(Html.fromHtml(getString(R.string.links_content)));
                 content_layout.addView(content_text);
@@ -135,35 +134,34 @@ public class Content extends Fragment {
                 divider.setBackgroundColor(getResources().getColor(R.color.accent));
                 divider.setHeight(1);
                 content_layout.addView(divider);
-                TextView div2 = new TextView(parentActivity);
-                div2.setLines(1);
-                content_layout.addView(div2);
+                createVerticalSpace(1);
 
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = 0; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
-                    createTextView(den, false, R.style.TextAppearance_AppCompat_Title, R.color.accent);
+                    createTextView(den, false, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
                     String info = ob.getString("info");
                     if(!info.equals("")){
                         createTextView(info, false, R.style.TextAppearance_AppCompat_Caption);
                     }
 
-                    StringBuilder sb = new StringBuilder();
                     JSONArray hodiny = ob.getJSONArray("hodiny");
                     for (int j = 0; j < hodiny.length(); j++) {
                         JSONObject hod = hodiny.getJSONObject(j);
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-                        sb.append("<b>" + hodina + ".hod\t" + predmet +"</b>\t\t\t"+zmena + "<br />");
+
+                        createTextRow("" + hodina + ".hod " + predmet, zmena, true);
                     }
                     if(hodiny.length() == 0){
-                        sb.append("Žádné suplování<br />");
+                        createTextRow("Žádné suplování", "", false);
                     }
-                    createTextView(sb.toString(), true, R.style.TextAppearance_AppCompat_Body1);
+
+                    createVerticalSpace(1);
                 }
 
                 return "";
@@ -177,6 +175,7 @@ public class Content extends Fragment {
 
     private String getJidelna(String s){
         boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
+        boolean prefSoup = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_soup", false);
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
@@ -185,15 +184,20 @@ public class Content extends Fragment {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
-                    createTextView(den, false, R.style.TextAppearance_AppCompat_Title, R.color.accent);
+                    createTextView(den, false, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
-                    JSONObject polevka = ob.getJSONObject("polevka");
-                    String polevkaNazev = polevka.getString("nazev");
-                    createTextView("<b>Polévka: </b>"+polevkaNazev, true, R.style.TextAppearance_AppCompat_Body1);
-
-                    if(prefFood){
-                        String polevkaAlergeny = polevka.getString("alergeny");
-                        createTextView("Alergeny: " + polevkaAlergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                    if(prefSoup) {
+                        JSONObject polevka = ob.getJSONObject("polevka");
+                        String polevkaNazev = polevka.getString("nazev");
+                        if (!"".equals(polevkaNazev)) {
+                            createTextRow("Polévka: ", polevkaNazev, false);
+                        }
+                        if (prefFood) {
+                            String polevkaAlergeny = polevka.getString("alergeny");
+                            if (!"".equals(polevkaAlergeny)) {
+                                createTextView("Alergeny: " + polevkaAlergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                            }
+                        }
                     }
 
                     JSONArray jidla = ob.getJSONArray("jidla");
@@ -205,12 +209,13 @@ public class Content extends Fragment {
                     for (int j = day_of_week; j < jidla.length(); j++) {
                         JSONObject jidlo = jidla.getJSONObject(j);
                         String nazev = jidlo.getString("nazev");
-                        createTextView("<b>"+(j+1)+")</b> "+nazev, true, R.style.TextAppearance_AppCompat_Body1);
+                        createTextRow("" + (j + 1) + ") ", nazev, false);
                         if(prefFood){
                             String alergeny = jidlo.getString("alergeny");
                             createTextView("Alergeny: "+alergeny, false, R.style.TextAppearance_AppCompat_Caption);
                         }
                     }
+                    createVerticalSpace(1);
                 }
                 return "";
             } else {
@@ -236,5 +241,31 @@ public class Content extends Fragment {
         if(html) myTV.setText(Html.fromHtml(s));
         else myTV.setText(s);
         content_layout.addView(myTV);
+    }
+
+    private void createVerticalSpace(int lines){
+        TextView div = new TextView(parentActivity);
+        div.setLines(lines);
+        content_layout.addView(div);
+    }
+
+    private void createTextRow(String s1, String s2, boolean align){
+        LinearLayout linearLayout = new LinearLayout(parentActivity);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        content_layout.addView(linearLayout);
+
+        TextView newTVleft = new TextView(parentActivity);
+        newTVleft.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body2);
+        if(align){
+            newTVleft.setEms(7);
+        }
+        newTVleft.setText(s1);
+
+        TextView newTVright = new TextView(parentActivity);
+        newTVright.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body1);
+        newTVright.setText(s2);
+
+        linearLayout.addView(newTVleft);
+        linearLayout.addView(newTVright);
     }
 }

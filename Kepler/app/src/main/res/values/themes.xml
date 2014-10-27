@@ -12,6 +12,6 @@
     <color name="primary">#3F51B5</color>
     <color name="primaryDark">#303f9f</color>
     <color name="primaryLight">#7986cb</color>
-    <color name="accent">#f50057</color>
+    <color name="accent">#ff3d00</color>
     <color name="white">#ffffff</color>
 </resources>

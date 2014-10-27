@@ -21,6 +21,11 @@
             android:title="@string/pref_food"
             android:summary="@string/pref_food_summary"
             android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="pref_soup"
+            android:title="@string/pref_soup"
+            android:summary="@string/pref_soup_summary"
+            android:defaultValue="true" />
     </PreferenceCategory>
 
 </PreferenceScreen>
