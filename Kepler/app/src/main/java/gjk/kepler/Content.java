@@ -255,7 +255,7 @@ public class Content extends Fragment {
         content_layout.addView(linearLayout);
 
         TextView newTVleft = new TextView(parentActivity);
-        newTVleft.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body2);
+        newTVleft.setTextAppearance(parentActivity, R.style.Base_TextAppearance_AppCompat_Body2);
         if(align){
             newTVleft.setEms(7);
         }
