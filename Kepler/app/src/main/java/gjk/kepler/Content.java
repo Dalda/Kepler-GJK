@@ -1,16 +1,12 @@
 package gjk.kepler;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +17,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -176,11 +171,17 @@ public class Content extends Fragment {
     private String getJidelna(String s){
         boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
         boolean prefSoup = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_soup", false);
+
+        Calendar calendar = Calendar.getInstance();
+        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK); //sobota 7 nedele 1 pondeli 2
+        if(day_of_week == 1 || day_of_week == 7) day_of_week = 0;
+        else day_of_week -= 2;
+
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
                 JSONArray dny = res.getJSONArray("dny");
-                for (int i = 0; i < dny.length(); i++) {
+                for (int i = day_of_week; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
@@ -201,12 +202,7 @@ public class Content extends Fragment {
                     }
 
                     JSONArray jidla = ob.getJSONArray("jidla");
-                    Calendar calendar = Calendar.getInstance();
-                    int day_of_week = calendar.get(Calendar.DAY_OF_WEEK); //sobota 7 nedele 1 pondeli 2
-                    if(day_of_week == 1 || day_of_week == 7) day_of_week = 0;
-                    else day_of_week -= 2;
-
-                    for (int j = day_of_week; j < jidla.length(); j++) {
+                    for (int j = 0; j < jidla.length(); j++) {
                         JSONObject jidlo = jidla.getJSONObject(j);
                         String nazev = jidlo.getString("nazev");
                         createTextRow("" + (j + 1) + ") ", nazev, false);
@@ -255,7 +251,8 @@ public class Content extends Fragment {
         content_layout.addView(linearLayout);
 
         TextView newTVleft = new TextView(parentActivity);
-        newTVleft.setTextAppearance(parentActivity, R.style.Base_TextAppearance_AppCompat_Body2);
+
+        newTVleft.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body2);
         if(align){
             newTVleft.setEms(7);
         }

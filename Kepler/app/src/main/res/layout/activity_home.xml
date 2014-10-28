@@ -32,9 +32,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@color/primaryLight"
-        android:dividerHeight="1dp"
-        android:background="@color/primary"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/primaryDark"
         android:layout_marginTop="@dimen/abc_action_bar_default_height_material"/>
 
 </android.support.v4.widget.DrawerLayout>
