@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -47,12 +49,14 @@ public class HTML_Loader {
             conn.connect();
             is = conn.getInputStream();
 
-            java.util.Scanner s = new java.util.Scanner(is, "utf-8").useDelimiter("\\A"); // \\A je konec
-            String result = s.hasNext() ? s.next() : "";
-
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                builder.append(line);
+            }
+            reader.close();
             is.close();
-            s.close();
-            return result;
+            return builder.toString();
         }
         catch (IOException e) {
             return null;

@@ -27,6 +27,9 @@ public class Home extends BaseActivity {
     private ListView myDrawerList;
     private ActionBarDrawerToggle myDrawerToggle;
 
+    //notifikace
+    private AlarmReceiver alarm;
+
     @Override protected int getLayoutResource() {
         return R.layout.activity_home;
     }
@@ -38,6 +41,14 @@ public class Home extends BaseActivity {
 
         //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        alarm = new AlarmReceiver();
+        boolean notify = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_notify", false);
+        if(notify){ //nastavit pravidelné notifikace
+            alarm.setAlarm(this);
+        } else{ //zrušit notifikace
+            alarm.cancelAlarm(this);
+        }
 
         myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         myDrawerList = (ListView) findViewById(R.id.navigation_drawer);

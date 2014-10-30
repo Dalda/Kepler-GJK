@@ -122,7 +122,7 @@ public class Content extends Fragment {
             if (res.getString("type").equals(content_types[type])) {
 
                 String trida = res.getString("trida");
-                createTextView("Třída " + trida, false, R.style.TextAppearance_AppCompat_Headline);
+                createTextView("Třída " + trida, R.style.TextAppearance_AppCompat_Headline);
 
                 //divider
                 TextView divider = new TextView(parentActivity);
@@ -136,11 +136,11 @@ public class Content extends Fragment {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
-                    createTextView(den, false, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
+                    createTextView(den, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
                     String info = ob.getString("info");
                     if(!info.equals("")){
-                        createTextView(info, false, R.style.TextAppearance_AppCompat_Caption);
+                        createTextView(info, R.style.TextAppearance_AppCompat_Caption);
                     }
 
                     JSONArray hodiny = ob.getJSONArray("hodiny");
@@ -185,7 +185,7 @@ public class Content extends Fragment {
                     JSONObject ob = dny.getJSONObject(i);
 
                     String den = ob.getString("den");
-                    createTextView(den, false, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
+                    createTextView(den, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
                     if(prefSoup) {
                         JSONObject polevka = ob.getJSONObject("polevka");
@@ -196,7 +196,7 @@ public class Content extends Fragment {
                         if (prefFood) {
                             String polevkaAlergeny = polevka.getString("alergeny");
                             if (!"".equals(polevkaAlergeny)) {
-                                createTextView("Alergeny: " + polevkaAlergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                                createTextView("Alergeny: " + polevkaAlergeny, R.style.TextAppearance_AppCompat_Caption);
                             }
                         }
                     }
@@ -208,7 +208,7 @@ public class Content extends Fragment {
                         createTextRow("" + (j + 1) + ") ", nazev, false);
                         if(prefFood){
                             String alergeny = jidlo.getString("alergeny");
-                            createTextView("Alergeny: "+alergeny, false, R.style.TextAppearance_AppCompat_Caption);
+                            createTextView("Alergeny: "+alergeny, R.style.TextAppearance_AppCompat_Caption);
                         }
                     }
                     createVerticalSpace(1);
@@ -222,20 +222,18 @@ public class Content extends Fragment {
         }
     }
 
-    private void createTextView(String s, boolean html, int resid){
+    private void createTextView(String s, int resid){
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, resid);
-        if(html) myTV.setText(Html.fromHtml(s));
-        else myTV.setText(s);
+        myTV.setText(s);
         content_layout.addView(myTV);
     }
 
-    private void createTextView(String s, boolean html, int resid, int colorid){
+    private void createTextView(String s, int resid, int colorid){
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, resid);
         myTV.setTextColor(getResources().getColor(colorid));
-        if(html) myTV.setText(Html.fromHtml(s));
-        else myTV.setText(s);
+        myTV.setText(s);
         content_layout.addView(myTV);
     }
 
