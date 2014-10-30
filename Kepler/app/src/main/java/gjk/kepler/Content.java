@@ -50,12 +50,10 @@ public class Content extends Fragment {
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
             case 0:
-                //content_text.setMovementMethod(new ScrollingMovementMethod());
                 String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
                 getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
                 break;
             case 1:
-                //content_text.setMovementMethod(new ScrollingMovementMethod());
                 getPage(getString(R.string.domain)+"?type="+content_types[type]);
                 break;
             case 2: //odkazy

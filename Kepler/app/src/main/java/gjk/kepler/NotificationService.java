@@ -5,6 +5,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 /** AlarmReceiver (WakefulBroadcast Receiver) drží wake lock pro tento service
  * Když service skončí, uvolní wake lock
@@ -14,18 +19,18 @@ public class NotificationService extends IntentService {
         super("NotificationService");
     }
 
-    private NotificationManager notificationMgr;
-    NotificationCompat.Builder builder;
-
     @Override
     protected void onHandleIntent(Intent intent) {
+        String prefClass = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "");
 
-        String result = "tady bude html, ktere stahnu";
+        String result = "tady bude html, ktere stahnu - nove suplovani";
+        HTML_Loader html_loader = new HTML_Loader(this);
+        if(html_loader.checkConnection()){
+            result = html_loader.getHTML(getString(R.string.domain)+"?type=suplovani&trida="+prefClass);
+        }
 
-        // If the app finds the string "doodle" in the Google home page content, it
-        // indicates the presence of a doodle. Post a "Doodle Alert" notification.
-        if (result.indexOf("nove suplovani") != -1) {
-            sendNotification("je nove suplovani");
+        if (result != null && result.contains("nove suplovani")) {
+            sendNotification(result);
         }
         // Uvolnit wake lock
         AlarmReceiver.completeWakefulIntent(intent);
@@ -33,18 +38,18 @@ public class NotificationService extends IntentService {
 
     // Poslat notifikaci
     private void sendNotification(String msg) {
-        notificationMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Home.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle(getString(R.string.doodle_alert))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-                        .setContentText(msg);
+                            .setSmallIcon(R.drawable.ic_menu_timetable)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                            .setContentTitle("Nové suplování")
+                            .setContentText(msg);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(1, mBuilder.build());
+
+        NotificationManager notifMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notifMgr.notify(1, mBuilder.build());
     }
 
 
