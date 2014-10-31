@@ -23,9 +23,9 @@ public class Home extends BaseActivity {
 
     //navigation drawer
     private String[] navigationTitles;
-    private DrawerLayout myDrawerLayout;
-    private ListView myDrawerList;
-    private ActionBarDrawerToggle myDrawerToggle;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+    private ActionBarDrawerToggle drawerToggle;
 
     //notifikace
     private AlarmReceiver alarm;
@@ -50,8 +50,8 @@ public class Home extends BaseActivity {
             alarm.cancelAlarm(this);
         }
 
-        myDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        myDrawerList = (ListView) findViewById(R.id.navigation_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.navigation_drawer);
 
         navigationTitles = getResources().getStringArray(R.array.navigation_titles);
         TypedArray navigationIcons = getResources().obtainTypedArray(R.array.navigation_icons);
@@ -62,11 +62,11 @@ public class Home extends BaseActivity {
             navigationItems.add(new NavigationItem(navigationTitles[i], navigationIcons.getResourceId(i, -1)));
         }
         navigationIcons.recycle(); //uvolnit resources
-        myDrawerList.setAdapter(new NavigationAdapter(this, R.layout.drawer_list_item, R.id.navigationTitle, navigationItems));
+        drawerList.setAdapter(new NavigationAdapter(this, R.layout.drawer_list_item, R.id.navigationTitle, navigationItems));
 
         // Zareagovat na kliknutí
-        myDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        myDrawerToggle = new ActionBarDrawerToggle(this, myDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
                 /** Zavolá se teprve když je navigation drawer úplně zavřený */
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);
@@ -81,8 +81,8 @@ public class Home extends BaseActivity {
                 }
             };
 
-        // Nastavit vytvořený myDrawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
-        myDrawerLayout.setDrawerListener(myDrawerToggle);
+        // Nastavit vytvořený drawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
+        drawerLayout.setDrawerListener(drawerToggle);
 
         current = 0; //nastav první stránku
     }
@@ -114,21 +114,21 @@ public class Home extends BaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync pokud byla zavolána onRestoreInstanceState
-        myDrawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     /* Zavolána při změně orientace obrazovky apod. */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        myDrawerToggle.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     /* Zavolána při volání invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Pokud je navigation drawer otevřen, skryj ikony action baru
-        boolean drawerOpen = myDrawerLayout.isDrawerOpen(myDrawerList);
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
         menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -150,9 +150,9 @@ public class Home extends BaseActivity {
             current = position;
             createContent(position);
 
-            myDrawerList.setItemChecked(position, true);
+            drawerList.setItemChecked(position, true);
             setTitle(navigationTitles[position]);
-            myDrawerLayout.closeDrawer(myDrawerList);
+            drawerLayout.closeDrawer(drawerList);
         }
     }
 
@@ -178,7 +178,7 @@ public class Home extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Předej event do ActionBarDrawerToggle
         // když vrátí true, tak zpracoval kliknutí na app icon
-        if (myDrawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         //jinak normálně zpracujeme action bar vpravo

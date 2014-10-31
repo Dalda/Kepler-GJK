@@ -2,6 +2,7 @@ package gjk.kepler;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -98,6 +99,11 @@ public class Content extends Fragment {
         String result;
         switch(type){
             case 0:
+                //uložení odpovědi serveru kvůli pozdějším notifikacím o změnách
+                SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
+                shared.putString(NotificationService.PREFS_HTTP_RESULT, s);
+                shared.apply();
+
                 result = getSuplovani(s);
                 break;
             case 1:
