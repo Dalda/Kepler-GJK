@@ -78,7 +78,8 @@ public class NotificationService extends IntentService {
                             .setSmallIcon(R.drawable.ic_menu_timetable)
                             .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                             .setContentTitle("Nové suplování")
-                            .setContentText(msg);
+                            .setContentText(msg)
+                            .setAutoCancel(true);
 
         mBuilder.setContentIntent(contentIntent);
 
