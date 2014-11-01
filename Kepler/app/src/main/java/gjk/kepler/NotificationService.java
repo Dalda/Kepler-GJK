@@ -40,12 +40,8 @@ public class NotificationService extends IntentService {
                 shared.commit();
 
                 if (differ(result, oldResult)) {
-                    //NAHRADIT ZA: "Objevilo se nové suplování pro vaší třídu"
-                    sendNotification(oldResult.substring(0, 20) + " and " + result.substring(0, 21));
+                    sendNotification("Objevilo se nové suplování pro vaší třídu");
                 }
-                //begin debug
-                else { sendNotification("nic nového..." + result.substring(0, 20));  }
-                //end debug
             }
         }
         // Uvolnit wake lock
