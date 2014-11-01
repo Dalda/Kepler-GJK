@@ -16,7 +16,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [ ] Specifikovat UI aplikace + screenshots do složky Docs/
 - [x] [Návrh API](https://github.com/Dalimil/Kepler-GJK/blob/master/GJK_API/Specifikace_API) se specifikací dat jako odpověď na dané GET parametry 
 - [x] Vytvořit API endpoint v PHP, se kterým bude aplikace komunikovat
-- [ ] Naprogramovat službu v pozadí, která se bude pravidelně spouštět i při vypnuté aplikaci
+- [x] Naprogramovat službu v pozadí, která se bude pravidelně spouštět i při vypnuté aplikaci
 - [ ] Vytvářet v pozadí notifikace o novém suplování
 - [ ] Závěrečné publikování aplikace na Google Play
 
