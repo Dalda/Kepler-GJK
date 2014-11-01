@@ -43,9 +43,7 @@ public class NotificationService extends IntentService {
                     sendNotification(oldResult.substring(0, 20) + " and " + result.substring(0, 21));
                 }
                 //begin debug
-                else {
-                    sendNotification("nic nového..." + result);
-                }
+                else { sendNotification("nic nového..." + result);  }
                 //end debug
             }
         }
