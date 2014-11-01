@@ -76,7 +76,7 @@ public class Content extends Fragment {
             new DownloadWebpageTask().execute(myURL);
         }else{
             //není připojení
-            Toast.makeText(parentActivity, "Nejste připojeni k internetu", Toast.LENGTH_LONG).show();
+            Toast.makeText(parentActivity, "Nejste připojeni k internetu", Toast.LENGTH_SHORT).show();
         }
     }
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
@@ -88,7 +88,7 @@ public class Content extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             if(result == null) {
-                Toast.makeText(parentActivity, "Nelze získat webovou stránku. Chybná URL?", Toast.LENGTH_LONG).show();
+                Toast.makeText(parentActivity, "Chyba při získávání dat", Toast.LENGTH_SHORT).show();
             }else{
                 show(result);
             }

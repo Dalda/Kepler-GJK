@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
@@ -55,7 +56,7 @@ public class Home extends BaseActivity {
         drawerList = (ListView) findViewById(R.id.navigation_drawer);
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        drawerLayout.setScrimColor(android.graphics.Color.argb(80, 0, 0, 0));
+        drawerLayout.setScrimColor(android.graphics.Color.argb(50, 0, 0, 0));
 
         navigationTitles = getResources().getStringArray(R.array.navigation_titles);
         TypedArray navigationIcons = getResources().obtainTypedArray(R.array.navigation_icons);

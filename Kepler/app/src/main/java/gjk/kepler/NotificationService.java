@@ -40,10 +40,11 @@ public class NotificationService extends IntentService {
                 shared.commit();
 
                 if (differ(result, oldResult)) {
+                    //NAHRADIT ZA: "Objevilo se nové suplování pro vaší třídu"
                     sendNotification(oldResult.substring(0, 20) + " and " + result.substring(0, 21));
                 }
                 //begin debug
-                else { sendNotification("nic nového..." + result);  }
+                else { sendNotification("nic nového..." + result.substring(0, 20));  }
                 //end debug
             }
         }
