@@ -51,9 +51,6 @@ public class NotificationService extends IntentService {
                 getPackageManager().setComponentEnabledSetting(networkReceiver, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                         PackageManager.DONT_KILL_APP);
             }
-            //begin debug
-            sendNotification("vše šlo, networkChangeRecEnabled" +(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED));
-            //end debug
         }
         else{ //nelze se připojit k internetu
             //pokud je vypnut NetworkChangeReceiver, tak ho zapni
@@ -62,10 +59,6 @@ public class NotificationService extends IntentService {
                 getPackageManager().setComponentEnabledSetting(networkReceiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                         PackageManager.DONT_KILL_APP);
             }
-            //begin debug
-            sendNotification("Nešlo, odkládám recEnabled"+(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED));
-            //end debug
-
         }
         // Uvolnit wake lock
         AlarmReceiver.completeWakefulIntent(intent);
