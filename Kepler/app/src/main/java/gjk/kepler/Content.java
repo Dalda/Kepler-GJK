@@ -3,11 +3,14 @@ package gjk.kepler;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -195,12 +198,12 @@ public class Content extends Fragment {
                         JSONObject polevka = ob.getJSONObject("polevka");
                         String polevkaNazev = polevka.getString("nazev");
                         if (!"".equals(polevkaNazev)) {
-                            createTextRow("Polévka: ", polevkaNazev, false);
+                            createTextRow("", "Polévka: "+polevkaNazev, false);
                         }
                         if (prefFood) {
                             String polevkaAlergeny = polevka.getString("alergeny");
                             if (!"".equals(polevkaAlergeny)) {
-                                createTextView("Alergeny: " + polevkaAlergeny, R.style.TextAppearance_AppCompat_Caption);
+                                createTextView("\tAlergeny: " + polevkaAlergeny, R.style.TextAppearance_AppCompat_Caption);
                             }
                         }
                     }
@@ -212,7 +215,7 @@ public class Content extends Fragment {
                         createTextRow("" + (j + 1) + ") ", nazev, false);
                         if(prefFood){
                             String alergeny = jidlo.getString("alergeny");
-                            createTextView("Alergeny: "+alergeny, R.style.TextAppearance_AppCompat_Caption);
+                            createTextView("\tAlergeny: "+alergeny, R.style.TextAppearance_AppCompat_Caption);
                         }
                     }
                     createVerticalSpace(1);
@@ -255,6 +258,10 @@ public class Content extends Fragment {
         TextView newTVleft = new TextView(parentActivity);
 
         newTVleft.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body2);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            newTVleft.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            newTVleft.setTypeface(Typeface.DEFAULT_BOLD);
+        }
         if(align){
             newTVleft.setEms(7);
         }
@@ -262,6 +269,9 @@ public class Content extends Fragment {
 
         TextView newTVright = new TextView(parentActivity);
         newTVright.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Body1);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            newTVright.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        }
         newTVright.setText(s2);
 
         linearLayout.addView(newTVleft);
