@@ -3,9 +3,11 @@ package gjk.kepler;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -25,24 +27,45 @@ public class NotificationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String result = null;
         HTML_Loader html_loader = new HTML_Loader(this);
-        if(html_loader.checkConnection()){
+        if(html_loader.checkConnection()) {
             String prefClass = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "");
-            result = html_loader.getHTML(getString(R.string.domain)+"?type=suplovani&trida="+prefClass);
-        }
+            result = html_loader.getHTML(getString(R.string.domain) + "?type=suplovani&trida=" + prefClass);
 
-        if (result != null) { //null je chyba při získávání HTML
-            String oldResult = getSharedPreferences(PREFS_NAME, 0).getString(PREFS_HTTP_RESULT, "");
-            //první hodnotu do oldResult neukládá tento Service, ale třída Content, proto prázdný string nebereme
-            if (!"".equals(oldResult)) {
-                //uložit novou HTTP odpověď serveru
-                SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
-                shared.putString(PREFS_HTTP_RESULT, result);
-                shared.commit();
+            if (result != null) { //null je chyba při získávání HTML, např server nedostupný
+                String oldResult = getSharedPreferences(PREFS_NAME, 0).getString(PREFS_HTTP_RESULT, "");
+                //první hodnotu do oldResult neukládá tento Service, ale třída Content, proto prázdný string nebereme
+                if (!"".equals(oldResult)) {
+                    //uložit novou HTTP odpověď serveru
+                    SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
+                    shared.putString(PREFS_HTTP_RESULT, result);
+                    shared.commit();
 
-                if (differ(result, oldResult)) {
-                    sendNotification("Objevilo se nové suplování pro vaší třídu");
+                    if (differ(result, oldResult)) {
+                        sendNotification("Objevilo se nové suplování pro vaší třídu");
+                    }
                 }
             }
+            //pokud je povolen NetworkChangeReceiver, tak ho vypni
+            ComponentName networkReceiver = new ComponentName(this, NetworkChangeReceiver.class);
+            if(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED){
+                getPackageManager().setComponentEnabledSetting(networkReceiver, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
+            //begin debug
+            sendNotification("vše šlo, networkChangeRecEnabled" +(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED));
+            //end debug
+        }
+        else{ //nelze se připojit k internetu
+            //pokud je vypnut NetworkChangeReceiver, tak ho zapni
+            ComponentName networkReceiver = new ComponentName(this, NetworkChangeReceiver.class);
+            if(getPackageManager().getComponentEnabledSetting(networkReceiver) != PackageManager.COMPONENT_ENABLED_STATE_ENABLED){
+                getPackageManager().setComponentEnabledSetting(networkReceiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
+            //begin debug
+            sendNotification("Nešlo, odkládám recEnabled"+(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED));
+            //end debug
+
         }
         // Uvolnit wake lock
         AlarmReceiver.completeWakefulIntent(intent);
@@ -81,7 +104,8 @@ public class NotificationService extends IntentService {
         mBuilder.setContentIntent(contentIntent);
 
         NotificationManager notifMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notifMgr.notify(1, mBuilder.build());
+        //notifMgr.notify(1, mBuilder.build());
+        notifMgr.notify((int)(Math.random()*1000), mBuilder.build());
     }
 
 
