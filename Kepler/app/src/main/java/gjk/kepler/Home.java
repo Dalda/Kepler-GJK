@@ -190,6 +190,7 @@ public class Home extends BaseActivity {
         // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
         switch (item.getItemId()) {
             case R.id.action_refresh:
+				Toast.makeText(parentActivity, "Aktualizuji...", Toast.LENGTH_SHORT).show();
                 this.createContent(current);
                 return true;
             default:

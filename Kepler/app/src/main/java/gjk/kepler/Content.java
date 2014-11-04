@@ -75,7 +75,6 @@ public class Content extends Fragment {
 
     private void getPage(String myURL){
         if(html_loader.checkConnection()){
-            Toast.makeText(parentActivity, "Aktualizuji...", Toast.LENGTH_SHORT).show();
             new DownloadWebpageTask().execute(myURL);
         }else{
             //není připojení
