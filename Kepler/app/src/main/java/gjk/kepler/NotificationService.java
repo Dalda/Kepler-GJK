@@ -41,7 +41,7 @@ public class NotificationService extends IntentService {
                     shared.commit();
 
                     if (differ(result, oldResult)) {
-                        sendNotification("Objevilo se nové suplování pro vaší třídu");
+                        sendNotification("Objevilo se nové suplování");
                     }
                 }
             }
