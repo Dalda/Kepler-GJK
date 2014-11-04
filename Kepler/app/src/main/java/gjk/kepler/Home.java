@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
@@ -190,7 +189,6 @@ public class Home extends BaseActivity {
         // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
         switch (item.getItemId()) {
             case R.id.action_refresh:
-				Toast.makeText(parentActivity, "Aktualizuji...", Toast.LENGTH_SHORT).show();
                 this.createContent(current);
                 return true;
             default:

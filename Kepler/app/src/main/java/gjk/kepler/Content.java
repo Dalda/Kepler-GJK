@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class Content extends Fragment {
 
     private static final String content_types[] = {"suplovani", "jidelna", "odkazy"};
 
+    private ProgressBar progressBar;
+
     public Content() {
         // Nutně prázdný pro třídy dědící Fragment
     }
@@ -50,6 +53,8 @@ public class Content extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_content, container, false);
         content_layout = (LinearLayout) rootView.findViewById(R.id.content_layout);
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
@@ -70,11 +75,13 @@ public class Content extends Fragment {
                 content_layout.addView(content_text);
                 break;
         }
+
         return rootView;
     }
 
     private void getPage(String myURL){
         if(html_loader.checkConnection()){
+            progressBar.setVisibility(View.VISIBLE);
             new DownloadWebpageTask().execute(myURL);
         }else{
             //není připojení
@@ -89,6 +96,7 @@ public class Content extends Fragment {
         }
         @Override
         protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.GONE);
             if(result == null) {
                 Toast.makeText(parentActivity, "Chyba při získávání dat", Toast.LENGTH_SHORT).show();
             }else{
@@ -119,7 +127,6 @@ public class Content extends Fragment {
         er.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Medium);
         er.setText(Html.fromHtml(result));
         content_layout.addView(er);
-
     }
 
     private String getSuplovani(String s) {
