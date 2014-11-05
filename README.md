@@ -5,13 +5,13 @@ Kepler-GJK
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
-![Suplování](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png)
+![Suplování](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png =100x)
 
-![Jídelna](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png)
+![Jídelna](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png =100x)
 
-![Nastavení](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png)
+![Nastavení](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png =100x)
 
-![Navigace](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_navigation.png)
+![Navigace](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_navigation.png =100x)
 
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
