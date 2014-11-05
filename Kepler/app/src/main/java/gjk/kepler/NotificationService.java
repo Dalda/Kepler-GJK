@@ -88,7 +88,7 @@ public class NotificationService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, Home.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.ic_menu_timetable)
+                            .setSmallIcon(R.drawable.ic_notification)
                             .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                             .setContentTitle("Nové suplování")
                             .setContentText(msg)
