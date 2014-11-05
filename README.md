@@ -5,15 +5,13 @@ Kepler-GJK
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
-<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" align="left" height="250" width="150" alt="Suplování"/>
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" align="left" height="350" width="210" alt="Suplování"/>
 
-![Suplování](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png =100x)
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png" align="left" height="350" width="210" alt="Jídelna"/>
 
-![Jídelna](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png =100x)
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" align="left" height="350" width="210" alt="Nastavení"/>
 
-![Nastavení](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png =100x)
-
-![Navigace](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_navigation.png =100x)
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_navigation.png" align="left" height="350" width="210" alt="Navigace"/>
 
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
