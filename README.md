@@ -5,11 +5,11 @@ Kepler-GJK
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
-<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" align="left" height="375" width="225" alt="Suplování"/>
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" height="390" width="234" alt="Suplování"/>
 
-<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png" align="middle" height="375" width="225" alt="Jídelna"/>
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png" height="390" width="234" alt="Jídelna"/>
 
-<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" align="right" height="375" width="225" alt="Nastavení"/>
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" height="390" width="234" alt="Nastavení"/>
 
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
@@ -19,7 +19,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [x] Funkční HTTP GET požadavek ze strany Android aplikace
 - [x] Ikony v Android aplikaci + vytvořen launcher
 - [x] Nastavení preferencí v aplikaci (třída, zobrazování alergenů, ...)
-- [x] Specifikace UI aplikace (+ screenshots ve složce Docs) -> Material Design 
+- [x] Specifikace UI aplikace ([+ screenshots ve složce Docs](https://github.com/Dalimil/Kepler-GJK/tree/master/Docs/Screenshots)) -> Material Design 
 - [x] [Návrh API](https://github.com/Dalimil/Kepler-GJK/blob/master/GJK_API/Specifikace_API) se specifikací dat jako odpověď na dané GET parametry 
 - [x] Vytvořit API endpoint v PHP, se kterým bude aplikace komunikovat
 - [x] Naprogramovat službu v pozadí, která se bude pravidelně spouštět i při vypnuté aplikaci
