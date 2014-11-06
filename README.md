@@ -27,6 +27,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [x] Vytvořit API endpoint v PHP, se kterým bude aplikace komunikovat
 - [x] Naprogramovat službu v pozadí, která se bude pravidelně spouštět i při vypnuté aplikaci
 - [x] Vytvářet v pozadí notifikace o novém suplování
+- [ ] Vyřešit pády aplikace u vícenásobného refresh a více než 2 paralelních threadů při pohybu v navigaci
 - [ ] Pořádně otestovat, zda notifikace fungují správně
 - [ ] Případné publikování aplikace na Google Play -> Developer účet 25$ jednorázově
 
