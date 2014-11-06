@@ -11,7 +11,8 @@ Kepler-GJK
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" align="left" height="390" width="234" alt="Nastavení"/>
 
-
+---------------------------------------
+## Specifikace a vývoj projektu
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
 Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
@@ -40,7 +41,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 * 8.10.
 	* Zvažování podporování jiných platforem (iOS a Windows Phone).
 	* Nápad jsem zavrhl, neexistují vhodné nástroje a převodníky (není divu Java a ObjC je obrovský rozdíl).
-	* API na gjk serveru nejlépe v PHP (PHP tam už je). Android aplikace provede HTTP GET požadavek.
+	* API na gjk serveru nejlépe v PHP. Android aplikace provede HTTP GET požadavek.
 * 12.10.
 	* Dokončen základ Android aplikace
 	* V aplikaci funguje navigace mezi jednotlivými položkami (další položky postupně přibudou).
