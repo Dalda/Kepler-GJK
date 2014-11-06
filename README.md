@@ -11,6 +11,7 @@ Kepler-GJK
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" align="left" height="390" width="234" alt="Nastavení"/>
 
+*Ukázkové screenshoty z aplikace*
 ---------------------------------------
 ## Specifikace a vývoj projektu
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
