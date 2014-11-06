@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,8 @@ public class Home extends BaseActivity {
 
     //navigation drawer
     private String[] navigationTitles;
+    private ArrayList<NavigationItem> navigationItems;
+    private NavigationAdapter drawerAdapter;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
@@ -58,14 +61,15 @@ public class Home extends BaseActivity {
 
         navigationTitles = getResources().getStringArray(R.array.navigation_titles);
         TypedArray navigationIcons = getResources().obtainTypedArray(R.array.navigation_icons);
-        ArrayList<NavigationItem> navigationItems = new ArrayList<NavigationItem>();
+        navigationItems = new ArrayList<NavigationItem>();
         // Nastavit adapter, který naplní navigation_drawer položkami NavigationItem (TextView+ImageView),
         // které jsou specifikované v drawer_list_item.xml
         for(int i=0;i<navigationTitles.length;i++){
             navigationItems.add(new NavigationItem(navigationTitles[i], navigationIcons.getResourceId(i, -1)));
         }
         navigationIcons.recycle(); //uvolnit resources
-        drawerList.setAdapter(new NavigationAdapter(this, R.layout.drawer_list_item, R.id.navigationTitle, navigationItems));
+        drawerAdapter = new NavigationAdapter(this, R.layout.drawer_list_item, R.id.navigationTitle, navigationItems);
+        drawerList.setAdapter(drawerAdapter);
 
         // Zareagovat na kliknutí
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -150,11 +154,14 @@ public class Home extends BaseActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         } else {
+            navigationItems.get(current).setActivated(false); //remove bold
             current = position;
             createContent(position);
 
-            drawerList.setItemChecked(position, true);
+            drawerList.setItemChecked(position, true); //default selector
             setTitle(navigationTitles[position]);
+            navigationItems.get(position).setActivated(true); //set bold
+            drawerAdapter.notifyDataSetChanged(); //update list (bold)
             drawerLayout.closeDrawer(drawerList);
         }
     }

@@ -33,6 +33,11 @@ public class NavigationAdapter extends ArrayAdapter<NavigationItem>{
         TextView navTitle = (TextView) convertView.findViewById(R.id.navigationTitle);
 
         navIcon.setImageResource(navigationItems.get(position).getIcon());
+        if(navigationItems.get(position).getActivated()){
+            navTitle.setTypeface(Typeface.DEFAULT_BOLD);
+        }else{
+            navTitle.setTypeface(Typeface.DEFAULT);
+        }
         navTitle.setText(navigationItems.get(position).getTitle());
 
         return convertView;
