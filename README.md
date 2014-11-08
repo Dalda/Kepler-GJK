@@ -62,3 +62,5 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 	* Implementace čtení JSON dat a komunikace s PHP endpointem v Android aplikaci
 * 30.10.
 	* Dokončen PHP API endpoint
+* 8.11.
+	* Aplikace je funkční a lze běžně používat, zbývá pořádně otestovat a zveřejnit apk
