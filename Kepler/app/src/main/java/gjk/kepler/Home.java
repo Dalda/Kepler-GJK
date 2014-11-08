@@ -2,6 +2,7 @@ package gjk.kepler;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,6 +22,9 @@ import java.util.ArrayList;
 public class Home extends BaseActivity {
 
     private int current; //Nutný pro refresh akci v action baru
+
+    public static final String PREFS_NAME = "PrefsFileDateID"; //viz setNewDateID()
+    public static final String PREFS_DATE_ID = "DateID";
 
     //navigation drawer
     private String[] navigationTitles;
@@ -151,6 +154,7 @@ public class Home extends BaseActivity {
     /* Navigation drawer click event */
     private void selectItem(int position) {
         if(position == 3) { //položka nastavení
+            setNewDateID(); //kvůli zneplatnění dříve stahovaných dat
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         } else {
@@ -168,6 +172,7 @@ public class Home extends BaseActivity {
 
     /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky */
     private void createContent(int position){
+        setNewDateID(); //kvůli zneplatnění dříve stahovaných dat
         // Vytvoří nový fragment a nastaví obsah podle argumentu
         Fragment fragment = new Content(); //moje třída Content
         Bundle args = new Bundle();
@@ -175,6 +180,15 @@ public class Home extends BaseActivity {
         fragment.setArguments(args);
         // Vložíme nový fragment nahrazením stávajícího
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+    }
+
+    /* Slouží později ve třídě Content pro zneplatnění dříve stahovaných dat
+     * Aplikace by jinak zapisovala na neexistující místo a spadla by
+     */
+    private void setNewDateID(){
+        SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
+        shared.putInt(PREFS_DATE_ID, (int)(Math.random()*100000));
+        shared.apply();
     }
 
     @Override

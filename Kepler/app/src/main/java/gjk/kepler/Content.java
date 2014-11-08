@@ -38,6 +38,8 @@ public class Content extends Fragment {
 
     private ProgressBar progressBar;
 
+    private int dateID;
+
     public Content() {
         // Nutně prázdný pro třídy dědící Fragment
     }
@@ -55,6 +57,9 @@ public class Content extends Fragment {
         content_layout = (LinearLayout) rootView.findViewById(R.id.content_layout);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        //uložení současného ID
+
+        dateID = parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999);
 
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
@@ -100,7 +105,10 @@ public class Content extends Fragment {
             if(result == null) {
                 Toast.makeText(parentActivity, "Chyba při získávání dat", Toast.LENGTH_SHORT).show();
             }else{
-                show(result);
+                //nejprve zkontrolovat, že Home mezitím nezměnila View a data nebyla zneplatněna
+                if(dateID == parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999)){
+                    show(result);
+                }
             }
         }
     }

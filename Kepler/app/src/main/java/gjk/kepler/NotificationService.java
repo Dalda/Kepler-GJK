@@ -38,7 +38,7 @@ public class NotificationService extends IntentService {
                     //uložit novou HTTP odpověď serveru
                     SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
                     shared.putString(PREFS_HTTP_RESULT, result);
-                    shared.commit();
+                    shared.commit(); //nesmí použít apply(), jinak bychom neudrželi lock
 
                     if (differ(result, oldResult)) {
                         sendNotification("Objevilo se nové suplování");
@@ -97,8 +97,7 @@ public class NotificationService extends IntentService {
         mBuilder.setContentIntent(contentIntent);
 
         NotificationManager notifMgr = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        //notifMgr.notify(1, mBuilder.build());
-        notifMgr.notify((int)(Math.random()*1000), mBuilder.build());
+        notifMgr.notify(1, mBuilder.build());
     }
 
 
