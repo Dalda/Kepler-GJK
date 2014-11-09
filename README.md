@@ -14,7 +14,6 @@ Nejprve budete muset povolit instalaci aplikací z *neznámých zdrojů* v Andro
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna_framed.png" align="left" height="600" width="360" alt="Jídelna"/>
 
-*Ukázka aplikace*
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" align="left" height="390" width="234" alt="Suplování"/>
 
@@ -28,6 +27,8 @@ Nejprve budete muset povolit instalaci aplikací z *neznámých zdrojů* v Andro
 **Maturitní projekt z informatiky.** [Specifikace projektu](https://docs.google.com/document/d/1zhgz2ZLsTh7DuwjyZ96LdD6Nas5F6uHO7drYmZspkiM/edit?usp=sharing)
 
 Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
+
+#### Stav dílčích částí projektu
 
 - [x] Základní Android aplikace s navigací a menu
 - [x] Funkční HTTP GET požadavek ze strany Android aplikace
