@@ -5,6 +5,12 @@ Kepler-GJK
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani_framed.png" align="left" height="580" width="348" alt="Suplování"/>
+
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna_framed.png" align="left" hspace="5" height="580" width="348" alt="Jídelna"/>
+
+*Ukázka aplikace*
+
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani.png" align="left" height="390" width="234" alt="Suplování"/>
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna.png" align="left" hspace="5" height="390" width="234" alt="Jídelna"/>
