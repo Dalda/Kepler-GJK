@@ -2,8 +2,11 @@ Kepler-GJK
 ==========
 
 *Autor:* **Dalimil Hájek**
-
 **Android aplikace pro Gymnázium Jana Keplera.**
+
+#### [Download](https://github.com/Dalimil/Kepler-GJK/releases/latest)
+Nejprve budete muset povolit instalaci aplikací z "neznámých zdrojů" v nastavení zabezpečení (Settings > Security > **Unknown sources**)
+<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/publishing_unknown_sources.png" alt="Neznámé zdroje"/>
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani_framed.png" align="left" height="600" width="360" alt="Suplování"/>
 
