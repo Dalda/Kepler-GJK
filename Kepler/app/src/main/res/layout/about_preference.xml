@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/appTitleDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Kepler - GJK"/>
+
+    <TextView
+        android:id="@+id/authorDescription"
+        android:layout_below="@id/appTitleDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:text="Autor: Dalimil Hájek\n" />
+
+    <ImageView
+        android:layout_toRightOf="@id/authorDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:src="@drawable/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/infoDescription"
+        android:layout_below="@id/authorDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:text="Případné chyby a problémy s aplikací hlašte správci sítě.\n"/>
+
+    <TextView
+        android:layout_below="@id/infoDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:text="Autor nenese zodpovědnost za pozdní příchody a zameškané hodiny způsobené používáním této aplikace."/>
+
+</RelativeLayout>

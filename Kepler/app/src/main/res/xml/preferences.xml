@@ -28,4 +28,8 @@
             android:defaultValue="true" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Info">
+        <gjk.kepler.AboutPreference
+            android:title="O aplikaci" />
+    </PreferenceCategory>
 </PreferenceScreen>
