@@ -115,7 +115,7 @@ public class Home extends BaseActivity {
             startActivity(intent);
         }
         else{
-            selectItem(current); //stáhni stránku vždy po obnovení této Activity
+            selectItem(current); //obnov stránku vždy po obnovení této Activity
         }
     }
 

@@ -17,4 +17,10 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"/>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/toolbar_shadow_height"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/shadow"/>
+
 </RelativeLayout>
