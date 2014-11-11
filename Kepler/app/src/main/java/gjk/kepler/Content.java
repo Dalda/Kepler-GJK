@@ -67,17 +67,23 @@ public class Content extends Fragment {
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
             case 0:
-				if(downloadNew){
+                String oldResult = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_RESULT, "");
+				if(downloadNew || "".equals(oldResult)){ //vynucené stažení nebo stahujeme poprvé
                 	String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
                 	getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
 				} else{
 					//zobraz naposledy stažené
-					String oldResult = getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_RESULT, "");
 					show(oldResult, false);
 				}
                 break;
             case 1:
-                getPage(getString(R.string.domain)+"?type="+content_types[type]);
+                String oldFoodResult = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_FOOD, "");
+                if(downloadNew || "".equals(oldFoodResult)){ //vynucená aktualizace (stažení) dat nebo stahujeme poprvé
+                    getPage(getString(R.string.domain)+"?type="+content_types[type]);
+                } else{
+                    //zobrazení dříve staženého
+                    show(oldFoodResult, false);
+                }
                 break;
             case 2: //odkazy
                 TextView content_text = new TextView(parentActivity);
@@ -136,6 +142,13 @@ public class Content extends Fragment {
                 result = getSuplovani(s);
                 break;
             case 1:
+                if(saveNew){
+                    //uložení nejaktuálnějších dat z jídelny
+                    SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
+                    shared.putString(NotificationService.PREFS_HTTP_FOOD, s);
+                    shared.apply();
+                }
+
                 result = getJidelna(s);
                 break;
             default:

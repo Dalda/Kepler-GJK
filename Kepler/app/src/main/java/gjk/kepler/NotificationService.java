@@ -21,7 +21,10 @@ public class NotificationService extends IntentService {
     }
 
     public static final String PREFS_NAME = "MyPrefsFile";
-    public static final String PREFS_HTTP_RESULT = "httpResult";
+    public static final String PREFS_HTTP_RESULT = "httpResult"; //suplovani
+    public static final String PREFS_HTTP_FOOD = "httpFood"; //jidelna
+
+    private static int refreshCount = 0;
 
     @Override
     protected void onHandleIntent(Intent intent) {
