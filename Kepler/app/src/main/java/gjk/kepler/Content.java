@@ -28,6 +28,7 @@ import java.util.Calendar;
 public class Content extends Fragment {
 
     public static final String ARG_CONTENT_NUMBER = "content_number";
+	public static final String ARG_DOWNLOAD_CONTENT = "download_content";
 
     private Activity parentActivity;
     private HTML_Loader html_loader;
@@ -61,11 +62,19 @@ public class Content extends Fragment {
 
         dateID = parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999);
 
+		boolean downloadNew = getArguments().getBoolean(ARG_DOWNLOAD_CONTENT);
+
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
         switch(type){
             case 0:
-                String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
-                getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
+				if(downloadNew){
+                	String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
+                	getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
+				} else{
+					//zobraz naposledy stažené
+					String oldResult = getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_RESULT, "");
+					show(oldResult, false);
+				}
                 break;
             case 1:
                 getPage(getString(R.string.domain)+"?type="+content_types[type]);
@@ -107,20 +116,22 @@ public class Content extends Fragment {
             }else{
                 //nejprve zkontrolovat, že Home mezitím nezměnila View a data nebyla zneplatněna
                 if(dateID == parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999)){
-                    show(result);
+                    show(result, true);
                 }
             }
         }
     }
 
-    private void show(String s) {
+    private void show(String s, boolean saveNew) {
         String result;
         switch(type){
             case 0:
-                //uložení odpovědi serveru kvůli pozdějším notifikacím o změnách
-                SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
-                shared.putString(NotificationService.PREFS_HTTP_RESULT, s);
-                shared.apply();
+				if(saveNew){
+		            //uložení odpovědi serveru kvůli pozdějším notifikacím o změnách
+		            SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
+		            shared.putString(NotificationService.PREFS_HTTP_RESULT, s);
+		            shared.apply();
+				}
 
                 result = getSuplovani(s);
                 break;

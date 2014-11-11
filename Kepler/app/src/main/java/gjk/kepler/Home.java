@@ -160,7 +160,7 @@ public class Home extends BaseActivity {
         } else {
             navigationItems.get(current).setActivated(false); //remove bold
             current = position;
-            createContent(position);
+            createContent(position, false);
 
             drawerList.setItemChecked(position, true); //default selector
             setTitle(navigationTitles[position]);
@@ -170,13 +170,14 @@ public class Home extends BaseActivity {
         }
     }
 
-    /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky */
-    private void createContent(int position){
+    /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky, parametr download ovlivní stažení nových dat */
+    private void createContent(int position, boolean download){
         setNewDateID(); //kvůli zneplatnění dříve stahovaných dat
         // Vytvoří nový fragment a nastaví obsah podle argumentu
         Fragment fragment = new Content(); //moje třída Content
         Bundle args = new Bundle();
         args.putInt(Content.ARG_CONTENT_NUMBER, position); //přibalíme argument
+		args.putBoolean(Content.ARG_DOWNLOAD_CONTENT, download); //chceme stáhnout nová data?
         fragment.setArguments(args);
         // Vložíme nový fragment nahrazením stávajícího
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -209,7 +210,7 @@ public class Home extends BaseActivity {
         // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                this.createContent(current);
+                this.createContent(current, true);//refresh vynutí download
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
