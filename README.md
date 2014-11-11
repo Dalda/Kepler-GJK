@@ -40,8 +40,8 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [x] Naprogramovat službu v pozadí, která se bude pravidelně spouštět i při vypnuté aplikaci
 - [x] Vytvářet v pozadí notifikace o novém suplování
 - [x] Vyřešit pády aplikace u vícenásobného refresh a více threadů při pohybu v navigaci
-- [ ] Pořádně otestovat, zda notifikace fungují správně
-- [ ] Případné publikování aplikace na Google Play -> Developer účet 25$ jednorázově
+- [ ] Pořádně otestovat, zda notifikace a cache ukládání fungují správně
+- [ ] Publikování aplikace na Google Play
 
 ## Changelog
 *Skutečné změny v projektu jsou v git historii commitů*

@@ -36,6 +36,7 @@ public class Content extends Fragment {
     private int type;
 
     private static final String content_types[] = {"suplovani", "jidelna", "odkazy"};
+    private static final String old_prefs[] = {NotificationService.PREFS_HTTP_RESULT, NotificationService.PREFS_HTTP_FOOD, ""};
 
     private ProgressBar progressBar;
 
@@ -106,6 +107,10 @@ public class Content extends Fragment {
         }else{
             //není připojení
             Toast.makeText(parentActivity, "Nejste připojeni k internetu", Toast.LENGTH_SHORT).show();
+            String old = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(old_prefs[type], "");
+            if(!("".equals(old))){
+                show(old, false);
+            }
         }
     }
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
@@ -129,26 +134,18 @@ public class Content extends Fragment {
     }
 
     private void show(String s, boolean saveNew) {
+        if(saveNew && (type == 0 || type == 1)){
+            //uložení nejaktuálnější odpovědi serveru
+            SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
+            shared.putString(old_prefs[type], s);
+            shared.apply();
+        }
         String result;
         switch(type){
             case 0:
-				if(saveNew){
-		            //uložení odpovědi serveru kvůli pozdějším notifikacím o změnách
-		            SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
-		            shared.putString(NotificationService.PREFS_HTTP_RESULT, s);
-		            shared.apply();
-				}
-
                 result = getSuplovani(s);
                 break;
             case 1:
-                if(saveNew){
-                    //uložení nejaktuálnějších dat z jídelny
-                    SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
-                    shared.putString(NotificationService.PREFS_HTTP_FOOD, s);
-                    shared.apply();
-                }
-
                 result = getJidelna(s);
                 break;
             default:
