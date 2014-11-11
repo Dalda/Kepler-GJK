@@ -34,9 +34,9 @@ public class HTML_Loader {
     }
 
     /* Vrátí String HTML stažené stránky, která je zadána jako parametr */
-    public String getHTML(String... urls) {
+    public String getHTML(String urlString) {
         InputStream is = null;
-        String myURL = urls[0];
+        String myURL = urlString;
         //vezme URL a připojí se k internetu přes HttpURLConnection
         try {
             URL url = new URL(myURL);

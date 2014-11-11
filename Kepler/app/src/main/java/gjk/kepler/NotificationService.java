@@ -23,15 +23,17 @@ public class NotificationService extends IntentService {
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String PREFS_HTTP_RESULT = "httpResult"; //suplovani
     public static final String PREFS_HTTP_FOOD = "httpFood"; //jidelna
-
-    private static int refreshCount = 0;
+    private static final String PREFS_REFRESH_COUNT = "refreshCount";
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String result = null;
+        int refreshCount = getSharedPreferences(PREFS_NAME, 0).getInt(PREFS_REFRESH_COUNT, 0); //pri neexistenci nastavi 0
+        refreshCount++;
+
         HTML_Loader html_loader = new HTML_Loader(this);
         if(html_loader.checkConnection()) {
             String prefClass = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "");
+            String result = null;
             result = html_loader.getHTML(getString(R.string.domain) + "?type=suplovani&trida=" + prefClass);
 
             if (result != null) { //null je chyba při získávání HTML, např server nedostupný
@@ -48,6 +50,22 @@ public class NotificationService extends IntentService {
                     }
                 }
             }
+            if(refreshCount > 24) { //jednou za den
+                refreshCount = 0;
+                String foodResult = null;
+                foodResult = html_loader.getHTML(getString(R.string.domain)+"?type=jidelna");
+                if (foodResult != null) { //null je chyba při získávání HTML, např server nedostupný
+                    //uložit nové aktuálnější data ze serveru
+                    SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
+                    shared.putString(PREFS_HTTP_FOOD, foodResult);
+                    shared.commit(); //nesmí použít apply(), jinak bychom neudrželi lock
+                }
+            }
+            //uložíme nový refreshCount (bohužel nelze vytvořit static proměnnou této třídy)
+            SharedPreferences.Editor prefs = getSharedPreferences(PREFS_NAME, 0).edit();
+            prefs.putInt(PREFS_REFRESH_COUNT, refreshCount);
+            prefs.commit(); //NE apply()
+
             //pokud je povolen NetworkChangeReceiver, tak ho vypni
             ComponentName networkReceiver = new ComponentName(this, NetworkChangeReceiver.class);
             if(getPackageManager().getComponentEnabledSetting(networkReceiver) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED){

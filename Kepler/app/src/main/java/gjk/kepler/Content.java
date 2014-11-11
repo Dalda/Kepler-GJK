@@ -112,7 +112,7 @@ public class Content extends Fragment {
         //stáhne webovou stránku v novém vlákně - jinak by se UI sekalo
         @Override
         protected String doInBackground(String... urls) {
-            return html_loader.getHTML(urls);
+            return html_loader.getHTML(urls[0]);
         }
         @Override
         protected void onPostExecute(String result) {
