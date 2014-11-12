@@ -26,6 +26,7 @@ public class NotificationService extends IntentService {
     public static final String PREFS_HTTP_RESULT = "httpResult"; //suplovani
     public static final String PREFS_HTTP_RESULT_DATE = "httpResultDate"; //čas stažení suplování
     public static final String PREFS_HTTP_FOOD = "httpFood"; //jidelna
+    public static final String PREFS_HTTP_FOOD_DATE = "httpFoodDate"; //čas stažení jídelny
     private static final String PREFS_REFRESH_COUNT = "refreshCount";
 
     @Override
@@ -62,6 +63,7 @@ public class NotificationService extends IntentService {
                     //uložit nové aktuálnější data ze serveru
                     SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
                     shared.putString(PREFS_HTTP_FOOD, foodResult);
+                    shared.putLong(PREFS_HTTP_FOOD_DATE, Calendar.getInstance().getTimeInMillis());
                     shared.commit(); //nesmí použít apply(), jinak bychom neudrželi lock
                 }
             }

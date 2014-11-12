@@ -39,6 +39,7 @@ public class Content extends Fragment {
 
     private static final String content_types[] = {"suplovani", "jidelna", "odkazy"};
     private static final String old_prefs[] = {NotificationService.PREFS_HTTP_RESULT, NotificationService.PREFS_HTTP_FOOD, ""};
+    private static final String old_prefs_date[] = {NotificationService.PREFS_HTTP_RESULT_DATE, NotificationService.PREFS_HTTP_FOOD_DATE};
 
     private ProgressBar progressBar;
 
@@ -140,10 +141,8 @@ public class Content extends Fragment {
             //uložení nejaktuálnější odpovědi serveru
             SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
             shared.putString(old_prefs[type], s);
-            if(type == 0){
-                //uložit čas stažení
-                shared.putLong(NotificationService.PREFS_HTTP_RESULT_DATE, Calendar.getInstance().getTimeInMillis());
-            }
+            //uložit čas stažení
+            shared.putLong(old_prefs_date[type], Calendar.getInstance().getTimeInMillis());
             shared.apply();
         }
         String result;
@@ -234,7 +233,11 @@ public class Content extends Fragment {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
 
-                
+                Long timeMillis = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getLong(NotificationService.PREFS_HTTP_FOOD_DATE, 0L);
+                if(timeMillis != 0){
+                    createTextViewTimeDate(timeMillis);
+                }
+
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = day_of_week; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
