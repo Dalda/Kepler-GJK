@@ -12,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Calendar;
+
 /** AlarmReceiver (WakefulBroadcast Receiver) drží wake lock pro tento service
  * Když service skončí, uvolní wake lock
  */
@@ -22,6 +24,7 @@ public class NotificationService extends IntentService {
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String PREFS_HTTP_RESULT = "httpResult"; //suplovani
+    public static final String PREFS_HTTP_RESULT_DATE = "httpResultDate"; //čas stažení suplování
     public static final String PREFS_HTTP_FOOD = "httpFood"; //jidelna
     private static final String PREFS_REFRESH_COUNT = "refreshCount";
 
@@ -43,6 +46,7 @@ public class NotificationService extends IntentService {
                     //uložit novou HTTP odpověď serveru
                     SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
                     shared.putString(PREFS_HTTP_RESULT, result);
+                    shared.putLong(PREFS_HTTP_RESULT_DATE, Calendar.getInstance().getTimeInMillis());
                     shared.commit(); //nesmí použít apply(), jinak bychom neudrželi lock
 
                     if (differ(result, oldResult)) {

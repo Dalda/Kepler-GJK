@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Content extends Fragment {
@@ -138,6 +140,10 @@ public class Content extends Fragment {
             //uložení nejaktuálnější odpovědi serveru
             SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
             shared.putString(old_prefs[type], s);
+            if(type == 0){
+                //uložit čas stažení
+                shared.putLong(NotificationService.PREFS_HTTP_RESULT_DATE, Calendar.getInstance().getTimeInMillis());
+            }
             shared.apply();
         }
         String result;
@@ -162,6 +168,11 @@ public class Content extends Fragment {
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
+
+                Long timeMillis = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getLong(NotificationService.PREFS_HTTP_RESULT_DATE, 0L);
+                if(timeMillis != 0){
+                    createTextViewTimeDate(timeMillis);
+                }
 
                 String trida = res.getString("trida");
                 createTextView("Třída " + trida, R.style.TextAppearance_AppCompat_Headline);
@@ -222,6 +233,8 @@ public class Content extends Fragment {
         try {
             JSONObject res = new JSONObject(s);
             if (res.getString("type").equals(content_types[type])) {
+
+                
                 JSONArray dny = res.getJSONArray("dny");
                 for (int i = day_of_week; i < dny.length(); i++) {
                     JSONObject ob = dny.getJSONObject(i);
@@ -264,6 +277,7 @@ public class Content extends Fragment {
         }
     }
 
+
     private void createTextView(String s, int resid){
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, resid);
@@ -276,6 +290,17 @@ public class Content extends Fragment {
         myTV.setTextAppearance(parentActivity, resid);
         myTV.setTextColor(getResources().getColor(colorid));
         myTV.setText(s);
+        content_layout.addView(myTV);
+    }
+
+    private void createTextViewTimeDate(Long timeMillis){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeMillis);
+        SimpleDateFormat df = new SimpleDateFormat("ccc HH:mm");
+        TextView myTV = new TextView(parentActivity);
+        myTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Caption);
+        myTV.setGravity(Gravity.RIGHT);
+        myTV.setText("Aktualizováno: "+df.format(calendar.getTime()));
         content_layout.addView(myTV);
     }
 
