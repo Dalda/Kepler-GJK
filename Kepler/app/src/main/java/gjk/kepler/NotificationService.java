@@ -31,6 +31,7 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        sendNotification("cca Hodina"+Calendar.getInstance().getTime());//debug
         HTML_Loader html_loader = new HTML_Loader(this);
         if(html_loader.checkConnection()) {
             String prefClass = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "");
