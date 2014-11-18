@@ -119,8 +119,8 @@ function suplovani($trida){
 					assert('$supl_tr->td[$td_num]["class"] == "td_supltrid_3"');
 					$zmena = $zmena . trim($supl_tr->td[$td_num]->p) . " ";
 				}
-				$hodina = array("hodina" => "???"), 
-								"predmet" => ""),
+				$hodina = array("hodina" => "???", 
+								"predmet" => "",
 								"zmena" => trim($zmena));
 				$hodiny[] = $hodina;
 				continue;
