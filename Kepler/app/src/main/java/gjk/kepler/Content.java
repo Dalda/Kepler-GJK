@@ -201,8 +201,12 @@ public class Content extends Fragment {
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-
-                        createTextRow("" + hodina + ".hod " + predmet, zmena, true);
+						
+						if(hodina == -1){//není standardní změna hodiny - např. avš
+							createTextRov("Jiné:", zmena, true);
+						} else{
+							createTextRow("" + hodina + ".hod " + predmet, zmena, true);
+						}
                     }
                     if(hodiny.length() == 0){
                         createTextRow("Žádné suplování", "", false);
