@@ -111,7 +111,20 @@ function suplovani($trida){
 			
 			$hodina = array();
 			$pocetTD = count($supl_tr->td);
-			if($pocetTD < 5) continue; //vadný řádek
+			if($pocetTD < 2) continue; //hodně vadný řádek
+			if($pocetTD < 5){ //$pocetTD >= 2
+				 //vadný řádek, resp. neni normalni zmena suplovani - napr jen avs, je to vyjimka, ale uzivatel o ni musi vedet
+				$zmena = "";
+				for($td_num = 1; $td_num < $pocetTD; $td_num++){ //načíst řádek
+					assert('$supl_tr->td[$td_num]["class"] == "td_supltrid_3"');
+					$zmena = $zmena . trim($supl_tr->td[$td_num]->p) . " ";
+				}
+				$hodina = array("hodina" => "???"), 
+								"predmet" => ""),
+								"zmena" => trim($zmena));
+				$hodiny[] = $hodina;
+				continue;
+			}
 			$td_num = 0;
 			$zmena = "";
 			for($td_num = 4; $td_num < $pocetTD; $td_num++){ //načíst změnu v suplování od čtvrté buňky
