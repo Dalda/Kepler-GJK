@@ -1,12 +1,13 @@
 Kepler-GJK
 ==========
 
-*Autor:* **Dalimil Hájek**
+### [Download](https://github.com/Dalimil/Kepler-GJK/releases/latest)
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
-### [Download](https://github.com/Dalimil/Kepler-GJK/releases/latest)
-Nejprve budete muset povolit instalaci aplikací z *neznámých zdrojů* v Android nastavení zabezpečení (Settings > Security > **Unknown sources**)
+Autor: **Dalimil Hájek**
+
+Pro instalaci budete muset nejprve povolit instalaci aplikací z *neznámých zdrojů* v Android nastavení zabezpečení (Settings > Security > **Unknown sources**)
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/publishing_unknown_sources.png" alt="Neznámé zdroje"/>
 
@@ -76,3 +77,6 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 	* Dokončen PHP API endpoint
 * 8.11.
 	* Aplikace je funkční a lze běžně používat, zbývá pořádně otestovat a zveřejnit apk
+* 21.11.
+	* Notifikace i cache jsem otestoval a fungují. 
+	* APK je prozatím zveřejněno zde na GitHubu a API skript běží na mé vlastní URL (nikoli na gjk.cz)
