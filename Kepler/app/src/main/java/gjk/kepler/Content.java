@@ -203,7 +203,7 @@ public class Content extends Fragment {
                         String zmena = hod.getString("zmena");
 						
 						if(hodina == -1){//není standardní změna hodiny - např. avš
-							createTextRov("Jiné:", zmena, true);
+							createTextRow("Jiná změna:", zmena, true);
 						} else{
 							createTextRow("" + hodina + ".hod " + predmet, zmena, true);
 						}
