@@ -45,22 +45,18 @@ function suplovani($trida){
 	$nadpisy = array(); //nadpis 1=> p0, p1, p2,; 2=> p3, p4; 3=> ...
 	$counter = 1;
 	$nadpisy[$counter] = array();
-	$first = true;
 	foreach($xml->p as $par){ //naplněnní pole nadpisy (text před každou tabulkou suplování)
 		$p = (string) $par;
 
 		if(strpos($p, 'Bakaláři') !== FALSE) continue;
-		if (strpos($p, 'Suplování:') !== FALSE){
-			if($first){
-				$first = false;
-			} else{
-				$counter += 1;
-				$nadpisy[$counter] = array();
-			}
-		}
 		if(strpos($p, 'datum výpisu') !== FALSE) continue;
 
 		$nadpisy[$counter][] = trim($p); 
+		if (strpos($p, 'Suplování:') !== FALSE){
+			$counter += 1;
+			$nadpisy[$counter] = array();
+		}
+		
 	}
 
 	$json = array();
@@ -119,7 +115,7 @@ function suplovani($trida){
 					assert('$supl_tr->td[$td_num]["class"] == "td_supltrid_3"');
 					$zmena = $zmena . trim($supl_tr->td[$td_num]->p) . " ";
 				}
-				$hodina = array("hodina" => "???", 
+				$hodina = array("hodina" => -1, 
 								"predmet" => "",
 								"zmena" => trim($zmena));
 				$hodiny[] = $hodina;
