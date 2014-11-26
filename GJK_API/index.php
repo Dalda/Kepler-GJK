@@ -51,10 +51,19 @@ function suplovani($trida){
 		if(strpos($p, 'Bakaláři') !== FALSE) continue;
 		if(strpos($p, 'datum výpisu') !== FALSE) continue;
 
-		$nadpisy[$counter][] = trim($p); 
-		if (strpos($p, 'Suplování:') !== FALSE){
-			$counter += 1;
-			$nadpisy[$counter] = array();
+		$novyNadpis = trim($p);
+		$obsahuje = FALSE;
+		for($indCounter = 0; $indCounter <= $counter; $indCounter++){ //kontrola kvuli opakovanemu popisu (nad i pod tabulkou)
+			if(in_array($novyNadpis, $nadpisy[$indCounter])){
+				$obsahuje = TRUE;
+			}
+		}
+		if(!$obsahuje){
+			$nadpisy[$counter][] = $novyNadpis; 
+			if (strpos($novyNadpis, 'Suplování:') !== FALSE){
+				$counter += 1;
+				$nadpisy[$counter] = array();
+			}
 		}
 		
 	}
