@@ -6,8 +6,6 @@ Kepler-GJK
        src="https://developer.android.com/images/brand/cs_generic_rgb_wo_60.png" />
 </a>
 
-### [Download](https://github.com/Dalimil/Kepler-GJK/releases/latest)
-
 **Android aplikace pro Gymnázium Jana Keplera.**
 
 Autor: **Dalimil Hájek**
@@ -43,7 +41,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 - [x] Vytvářet v pozadí notifikace o novém suplování
 - [x] Vyřešit pády aplikace u vícenásobného refresh a více threadů při pohybu v navigaci
 - [x] Pořádně otestovat, zda notifikace a cache ukládání fungují správně
-- [ ] Publikování aplikace na Google Play
+- [x] Publikování aplikace na Google Play
 
 ## Changelog
 *Skutečné změny v projektu jsou v git historii commitů*
@@ -81,3 +79,7 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 * 21.11.
 	* Notifikace i cache jsem otestoval a fungují. 
 	* APK je prozatím zveřejněno zde na GitHubu a API skript běží na mé vlastní URL (nikoli na gjk.cz)
+* 27.11.
+	* Publikování aplikace na Google Play
+	* Je potřeba dodělat grafiku a popisy na Google Play stránce
+	* Zjistit a případně reagovat na feedback od uživatelů
