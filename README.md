@@ -1,15 +1,16 @@
 Kepler-GJK
 ==========
 
+<a href="https://play.google.com/store/apps/details?id=gjk.kepler">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/cs_generic_rgb_wo_60.png" />
+</a>
+
 ### [Download](https://github.com/Dalimil/Kepler-GJK/releases/latest)
 
 **Android aplikace pro Gymnázium Jana Keplera.**
 
 Autor: **Dalimil Hájek**
-
-Pro instalaci budete muset nejprve povolit instalaci aplikací z *neznámých zdrojů* v Android nastavení zabezpečení (Settings > Security > **Unknown sources**)
-
-<img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/publishing_unknown_sources.png" alt="Neznámé zdroje"/>
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani_framed.png" align="left" height="600" width="360" alt="Suplování"/>
 
