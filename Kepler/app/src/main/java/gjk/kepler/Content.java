@@ -330,7 +330,7 @@ public class Content extends Fragment {
             newTVleft.setTypeface(Typeface.DEFAULT_BOLD);
         }
         if(align){
-            newTVleft.setEms(7);
+            newTVleft.setEms(8);
         }
         newTVleft.setText(s1);
 
