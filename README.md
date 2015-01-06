@@ -79,7 +79,10 @@ Cílem projektu je aplikace, která umí uživateli ukazovat aktuální změny v
 * 21.11.
 	* Notifikace i cache jsem otestoval a fungují. 
 	* APK je prozatím zveřejněno zde na GitHubu a API skript běží na mé vlastní URL (nikoli na gjk.cz)
-* 27.11.
+* 27.11.2014
 	* Publikování aplikace na Google Play
 	* Je potřeba dodělat grafiku a popisy na Google Play stránce
 	* Zjistit a případně reagovat na feedback od uživatelů
+* 6.1.2015
+	* Google Play stránka je v pořádku
+	* Bylo předěláno parsování jídelny, protože byly změněny GJK stránky školy
