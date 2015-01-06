@@ -32,7 +32,7 @@ function getXML($url){
 }
 
 function suplovani($trida){
-	$xml = getXML('http://old.gjk.cz/suplovani.php');
+	$xml = getXML('http://195.113.84.161/suplobec.htm');
 	if($xml == null) return false;
 
 	foreach($xml->xpath("//p[not(text())]") as $torm){ //prázdné <p>
@@ -158,91 +158,107 @@ function getAlergen($num){
 	}
 }
 
-function jidelna(){
-	$xml = getXML('http://gjk.cz/?id=4332');
-	if($xml == null) return false;
-	
-	//zpracuj $xml
-	$xml = $xml->xpath("//table[@class = 'info']");
-	$xml = $xml[0];
-
-	//načti dny v záhlaví tabulky
-	$dny = array();
-	$poradi = 0;
-	foreach($xml->cols->tr[0]->th as $th){
-		$dny[] = (string) $th;
-		//oddělit datum mezerou
-		$last = $dny[$poradi];
-		$pos = -1;
-		for($i=0;$i<strlen($last);$i++){
-			if($last[$i] >= '0' && $last[$i] <= '9'){
-				$pos = $i;
-				break;
-			}
-		}
-		assert('$pos != -1');
-		$dny[$poradi] = trim(substr($last, 0, $pos) . " " . substr($last, $pos));
-		$poradi += 1;
+function getAlergeny($str){ //nazev" "A:1, 2 ,3 
+	$aIND = strpos($str, "A:");
+	if($aIND === FALSE){
+		$aIND = strpos($str, "A");
 	}
-	//var_dump($dny);
+	if(!empty($str) && $aIND !== FALSE){ //bez alergenů nepokračujeme, protože v kolonce může být místo jídla např. "Státní svátek"
+		$jidlo = trim(substr($str, 0, $aIND));
+		$jidlo = preg_replace('/\s+/', ' ',$jidlo); //odstranění více mezer
 
-	//načti denní menu (jídla) z tabulky
+		//alergeny
+		$alergenyString = "";
+		$als = explode(",", substr($str, $aIND+2));
+		for($i=0;$i<sizeof($als);$i++){
+			$k = trim($als[$i]);
+			$k = preg_replace("/[^0-9]/", "", $k);
+
+			$newAlerg = getAlergen($k);
+			if($newAlerg != ""){
+				if($i != 0){ $alergenyString = $alergenyString . ", "; }
+				$alergenyString = $alergenyString . $newAlerg;
+			}
+			
+		}
+		return array("nazev" => $jidlo, "alergeny" => $alergenyString);
+	}
+	return null;
+}
+
+function jidelna(){
+	$csv = file_get_contents('https://docs.google.com/spreadsheets/d/1JpEUpUJ3slFP1y2PgJV1J_2_sBf5VOek4TUcq90P_Cs/export?format=csv');
+	if($csv == null) return false;
+	//var_dump($csv);
+
+	$denID = array("Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek");
+	$pointDen = 0;
+	$lines = explode("\n", $csv);
 	$menu = array();
-	for($i=0;$i<5;$i++){ $menu[$i] = array(); }
-	$pocetJidel = count($xml->cols->tr);
-	for($line=1;$line<$pocetJidel;$line++){ //počet řádků v tabulce ~ počet jídel
-		$token = 0;
-		foreach($xml->cols->tr[$line]->td as $td){
+	for($i=0;$i<count($lines);$i++){
+		if(strpos($lines[$i], $denID[$pointDen]) !== FALSE){
+			$menu[$pointDen] = array();
 
-			$tmp = trim((string) $td->div);
-			$aIND = strpos($tmp, "A:");
-			if($aIND === FALSE){
-				$aIND = strpos($tmp, "A");
+			//den a polevka 1radek
+			$iA = strpos($lines[$i], "\"");
+			$iB = strrpos($lines[$i], "\"");
+			$polevka = substr($lines[$i], $iA+1, $iB-$iA);
+			
+			//datum 2radek
+			$datum = $lines[$i+1];
+			$dA = 0;
+			while(!($datum[$dA] >= '0' && $datum[$dA] <= '9')) $dA++;
+			$dB = $dA + 1;
+			while(!($datum[$dB] == ',')) $dB++;
+
+			//jogurt/zelenina/ovoce apod misto polevky
+			$alterPolevka = null;
+			if(strpos($lines[$i+1], "nebo") !== FALSE){
+				$aA = strpos($lines[$i+1], "nebo")+4;
+				while(!ctype_alpha($lines[$i+1][$aA])) $aA++;
+				$aB = $aA+1;
+				while($lines[$i+1][$aB] != ",") $aB++;
+
+				$alterPolevka = substr($lines[$i+1], $aA, $aB-$aA);
 			}
-			if(!empty($tmp) && $aIND !== FALSE){ //bez alergenů nepokračujeme, protože v kolonce může být místo jídla např. "Státní svátek"
-				$jidlo = trim(substr($tmp, 0, $aIND));
-				$jidlo = preg_replace('/\s+/', ' ',$jidlo); //někdy kuchařky vloží třeba 10 mezer mezi 2 slova
 
-				//alergeny
-				$alergenyString = "";
-				$als = explode(",", substr($tmp, $aIND+2));
-				for($i=0;$i<sizeof($als);$i++){
-					$k = trim($als[$i]);
-					$k = preg_replace("/[^0-9]/", "", $k);
+			$menu[$pointDen]["den"] = $denID[$pointDen] . " " . substr($datum, $dA, $dB-$dA);
 
-					$newAlerg = getAlergen($k);
-					if($newAlerg != ""){
-						if($i != 0){ $alergenyString = $alergenyString . ", "; }
-						$alergenyString = $alergenyString . $newAlerg;
-					}
-					
+			//jidla
+			$jidla = array();
+			$k = $i+2;
+			while(strpos($lines[$k], "\"") !== FALSE){
+				$iA = strpos($lines[$k], "\"");
+				$iB = strrpos($lines[$k], "\"");
+				$jidla[] = substr($lines[$k], $iA+1, $iB-$iA);
+				$k++;
+			}
+
+			//prirazeni alergenu
+			$jidlo = getAlergeny($polevka);
+			if($jidlo != null){
+				if($alterPolevka != null){
+					$jidlo["nazev"] = $jidlo["nazev"] . " (nebo ".$alterPolevka .")";
 				}
-				$menu[$token][] = array("nazev" => $jidlo, "alergeny" => $alergenyString);
+				$menu[$pointDen]["polevka"] = $jidlo;
 			}
-			$token = ($token + 1);
+			$menu[$pointDen]["jidla"] = array();
+			foreach($jidla as $j){
+				$jidlo = getAlergeny($j);
+				if($jidlo != null){
+					$menu[$pointDen]["jidla"][] = $jidlo;
+				}
+			}
+			
+			$i = $k-1;
+			$pointDen += 1;
 		}
 	}
 
 	//json print
 	$json = array();
 	$json["type"] = "jidelna";
-	$json["dny"] = array();
-
-	for($den=0;$den<5;$den++){
-		$polevka = "";
-		$jidla = array();
-		foreach($menu[$den] as $jidlo){
-			if(empty($polevka)){
-				$polevka = $jidlo;
-			}else{
-				$jidla[] = $jidlo;
-			}
-		}
-		if($polevka == ""){
-			$polevka = array("nazev" => "", "alergeny" => "");
-		}
-		$json["dny"][] = array("den" => $dny[$den], "polevka" => $polevka, "jidla" => $jidla);
-	}
+	$json["dny"] = $menu;
 	echo json_encode($json);
 
 	return true;
