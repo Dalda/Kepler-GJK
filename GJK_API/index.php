@@ -32,7 +32,7 @@ function getXML($url){
 }
 
 function suplovani($trida){
-	$xml = getXML('http://195.113.84.161/suplobec.htm');
+	$xml = getXML('http://old.gjk.cz/suplovani.php');
 	if($xml == null) return false;
 
 	foreach($xml->xpath("//p[not(text())]") as $torm){ //prázdné <p>
@@ -202,7 +202,10 @@ function jidelna(){
 			//den a polevka 1radek
 			$iA = strpos($lines[$i], "\"");
 			$iB = strrpos($lines[$i], "\"");
-			$polevka = substr($lines[$i], $iA+1, $iB-$iA);
+			$polevka = "";
+			if($iA !== FALSE && $iB !== FALSE){
+				$polevka = substr($lines[$i], $iA+1, $iB-$iA);
+			}
 			
 			//datum 2radek
 			$datum = $lines[$i+1];
@@ -215,11 +218,20 @@ function jidelna(){
 			$alterPolevka = null;
 			if(strpos($lines[$i+1], "nebo") !== FALSE){
 				$aA = strpos($lines[$i+1], "nebo")+4;
-				while(!ctype_alpha($lines[$i+1][$aA])) $aA++;
-				$aB = $aA+1;
-				while($lines[$i+1][$aB] != ",") $aB++;
+				$zbytekRadku = substr($lines[$i+1], $aA);
+				$aA = 0;
+				while($aA < strlen($zbytekRadku) && !ctype_alpha($zbytekRadku[$aA])) $aA++;
 
-				$alterPolevka = substr($lines[$i+1], $aA, $aB-$aA);
+				if($aA < strlen($zbytekRadku)){
+					$aB = $aA+1;
+					while($aB < strlen($zbytekRadku) && $zbytekRadku[$aB] != ",") $aB++;
+
+					$alterPolevka = substr($zbytekRadku, $aA, $aB-$aA);
+					$altInd = strpos($alterPolevka, "A:");
+					if($altInd !== FALSE){
+						$alterPolevka = substr($alterPolevka, 0, $altInd);
+					}
+				}
 			}
 
 			$menu[$pointDen]["den"] = $denID[$pointDen] . " " . substr($datum, $dA, $dB-$dA);
@@ -234,14 +246,17 @@ function jidelna(){
 				$k++;
 			}
 
-			//prirazeni alergenu
+			//prirazeni alergenu k polevce
 			$jidlo = getAlergeny($polevka);
 			if($jidlo != null){
 				if($alterPolevka != null){
-					$jidlo["nazev"] = $jidlo["nazev"] . " (nebo ".$alterPolevka .")";
+					$jidlo["nazev"] = $jidlo["nazev"] . " (nebo ".trim($alterPolevka) .")";
 				}
 				$menu[$pointDen]["polevka"] = $jidlo;
+			}else{ //aplikace pak polevku nezobrazi (uz mame defin. API)
+				$menu[$pointDen]["polevka"] = array("nazev" => "", "alergeny" => ""); 
 			}
+			
 			$menu[$pointDen]["jidla"] = array();
 			foreach($jidla as $j){
 				$jidlo = getAlergeny($j);
