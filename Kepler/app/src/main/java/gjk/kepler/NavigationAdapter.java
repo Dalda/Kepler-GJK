@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NavigationAdapter extends ArrayAdapter<NavigationItem>{
+public class NavigationAdapter extends ArrayAdapter<NavigationItem> {
 
     private Context context;
     private ArrayList<NavigationItem> navigationItems;
 
-    public NavigationAdapter(Context context, int resource, int textViewID, ArrayList<NavigationItem> navigationItems){
+    public NavigationAdapter(Context context, int resource, int textViewID, ArrayList<NavigationItem> navigationItems) {
         super(context, resource, textViewID, navigationItems);
         this.context = context;
         this.navigationItems = navigationItems;
@@ -24,7 +24,7 @@ public class NavigationAdapter extends ArrayAdapter<NavigationItem>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.drawer_list_item, null);
         }
@@ -33,9 +33,9 @@ public class NavigationAdapter extends ArrayAdapter<NavigationItem>{
         TextView navTitle = (TextView) convertView.findViewById(R.id.navigationTitle);
 
         navIcon.setImageResource(navigationItems.get(position).getIcon());
-        if(navigationItems.get(position).getActivated()){
+        if (navigationItems.get(position).getActivated()) {
             navTitle.setTypeface(Typeface.DEFAULT_BOLD);
-        }else{
+        } else {
             navTitle.setTypeface(Typeface.DEFAULT);
         }
         navTitle.setText(navigationItems.get(position).getTitle());

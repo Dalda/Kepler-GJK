@@ -2,7 +2,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <!-- Horní lišta -->
+    <!-- Action bar -->
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
@@ -14,14 +14,14 @@
         android:layout_height="match_parent"
         android:background="@color/background_material_light">
 
-        <!-- Hlavní obsah obrazovky,-->
+        <!-- Main screen content-->
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <!-- Navigation drawer
-            musí uvést layout_gravity a height match_parent -->
+            - must define layout_gravity and height=match_parent -->
         <ListView android:id="@+id/navigation_drawer"
             android:layout_width="250dp"
             android:layout_height="match_parent"

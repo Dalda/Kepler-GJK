@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
-public abstract class BaseActivity extends ActionBarActivity{
+public abstract class BaseActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
 
@@ -21,5 +21,6 @@ public abstract class BaseActivity extends ActionBarActivity{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
+
     protected abstract int getLayoutResource();
 }

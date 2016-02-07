@@ -30,7 +30,7 @@ import java.util.Calendar;
 public class Content extends Fragment {
 
     public static final String ARG_CONTENT_NUMBER = "content_number";
-	public static final String ARG_DOWNLOAD_CONTENT = "download_content";
+    public static final String ARG_DOWNLOAD_CONTENT = "download_content";
 
     private Activity parentActivity;
     private HTML_Loader html_loader;
@@ -46,7 +46,7 @@ public class Content extends Fragment {
     private int dateID;
 
     public Content() {
-        // Nutně prázdný pro třídy dědící Fragment
+        // Extending fragment -> empty
     }
 
     @Override
@@ -62,34 +62,32 @@ public class Content extends Fragment {
         content_layout = (LinearLayout) rootView.findViewById(R.id.content_layout);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
-        //uložení současného ID
+        // save current ID
 
         dateID = parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999);
 
-		boolean downloadNew = getArguments().getBoolean(ARG_DOWNLOAD_CONTENT);
+        boolean downloadNew = getArguments().getBoolean(ARG_DOWNLOAD_CONTENT);
 
         type = getArguments().getInt(ARG_CONTENT_NUMBER);
-        switch(type){
+        switch (type) {
             case 0:
                 String oldResult = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_RESULT, "");
-				if(downloadNew || "".equals(oldResult)){ //vynucené stažení nebo stahujeme poprvé
-                	String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
-                	getPage(getString(R.string.domain)+"?type="+content_types[type]+"&trida="+prefClass);
-				} else{
-					//zobraz naposledy stažené
-					show(oldResult, false);
-				}
+                if (downloadNew || "".equals(oldResult)) { // force refresh or first time
+                    String prefClass = PreferenceManager.getDefaultSharedPreferences(parentActivity).getString("pref_class", "");
+                    getPage(getString(R.string.domain) + "?type=" + content_types[type] + "&trida=" + prefClass);
+                } else {
+                    show(oldResult, false);
+                }
                 break;
             case 1:
                 String oldFoodResult = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(NotificationService.PREFS_HTTP_FOOD, "");
-                if(downloadNew || "".equals(oldFoodResult)){ //vynucená aktualizace (stažení) dat nebo stahujeme poprvé
-                    getPage(getString(R.string.domain)+"?type="+content_types[type]);
-                } else{
-                    //zobrazení dříve staženého
+                if (downloadNew || "".equals(oldFoodResult)) { // force refresh or first time
+                    getPage(getString(R.string.domain) + "?type=" + content_types[type]);
+                } else {
                     show(oldFoodResult, false);
                 }
                 break;
-            case 2: //odkazy
+            case 2: // links
                 TextView content_text = new TextView(parentActivity);
                 content_text.setGravity(0x01);
                 content_text.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Display1);
@@ -103,33 +101,34 @@ public class Content extends Fragment {
         return rootView;
     }
 
-    private void getPage(String myURL){
-        if(html_loader.checkConnection()){
+    private void getPage(String myURL) {
+        if (html_loader.checkConnection()) {
             progressBar.setVisibility(View.VISIBLE);
             new DownloadWebpageTask().execute(myURL);
-        }else{
-            //není připojení
+        } else {
+            // no connection
             Toast.makeText(parentActivity, "Nejste připojeni k internetu", Toast.LENGTH_SHORT).show();
             String old = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getString(old_prefs[type], "");
-            if(!("".equals(old))){
+            if (!("".equals(old))) {
                 show(old, false);
             }
         }
     }
+
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
-        //stáhne webovou stránku v novém vlákně - jinak by se UI sekalo
         @Override
         protected String doInBackground(String... urls) {
             return html_loader.getHTML(urls[0]);
         }
+
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
-            if(result == null) {
+            if (result == null) {
                 Toast.makeText(parentActivity, "Chyba při získávání dat", Toast.LENGTH_SHORT).show();
-            }else{
-                //nejprve zkontrolovat, že Home mezitím nezměnila View a data nebyla zneplatněna
-                if(dateID == parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999)){
+            } else {
+                // changed View in the meantime?
+                if (dateID == parentActivity.getSharedPreferences(Home.PREFS_NAME, 0).getInt(Home.PREFS_DATE_ID, 999)) {
                     show(result, true);
                 }
             }
@@ -137,16 +136,16 @@ public class Content extends Fragment {
     }
 
     private void show(String s, boolean saveNew) {
-        if(saveNew && (type == 0 || type == 1)){
-            //uložení nejaktuálnější odpovědi serveru
+        if (saveNew && (type == 0 || type == 1)) {
+            // save latest response
             SharedPreferences.Editor shared = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).edit();
             shared.putString(old_prefs[type], s);
-            //uložit čas stažení
+            // and time
             shared.putLong(old_prefs_date[type], Calendar.getInstance().getTimeInMillis());
             shared.apply();
         }
         String result;
-        switch(type){
+        switch (type) {
             case 0:
                 result = getSuplovani(s);
                 break;
@@ -169,7 +168,7 @@ public class Content extends Fragment {
             if (res.getString("type").equals(content_types[type])) {
 
                 Long timeMillis = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getLong(NotificationService.PREFS_HTTP_RESULT_DATE, 0L);
-                if(timeMillis != 0){
+                if (timeMillis != 0) {
                     createTextViewTimeDate(timeMillis);
                 }
 
@@ -191,7 +190,7 @@ public class Content extends Fragment {
                     createTextView(den, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
                     String info = ob.getString("info");
-                    if(!info.equals("")){
+                    if (!info.equals("")) {
                         createTextView(info, R.style.TextAppearance_AppCompat_Caption);
                     }
 
@@ -201,14 +200,14 @@ public class Content extends Fragment {
                         int hodina = hod.getInt("hodina");
                         String predmet = hod.getString("predmet");
                         String zmena = hod.getString("zmena");
-						
-						if(hodina == -1){//není standardní změna hodiny - např. avš
-							createTextRow("Jiná změna:", zmena, true);
-						} else{
-							createTextRow("" + hodina + ".hod " + predmet, zmena, true);
-						}
+
+                        if (hodina == -1) {
+                            createTextRow("Jiná změna:", zmena, true);
+                        } else {
+                            createTextRow("" + hodina + ".hod " + predmet, zmena, true);
+                        }
                     }
-                    if(hodiny.length() == 0){
+                    if (hodiny.length() == 0) {
                         createTextRow("Žádné suplování", "", false);
                     }
 
@@ -219,18 +218,18 @@ public class Content extends Fragment {
             } else {
                 return "Chyba pří načítání suplování";
             }
-        }catch(JSONException e){
+        } catch (JSONException e) {
             return "Chyba pří načítání suplování";
         }
     }
 
-    private String getJidelna(String s){
+    private String getJidelna(String s) {
         boolean prefFood = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_food", false);
         boolean prefSoup = PreferenceManager.getDefaultSharedPreferences(parentActivity).getBoolean("pref_soup", false);
 
         Calendar calendar = Calendar.getInstance();
-        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK); //sobota 7 nedele 1 pondeli 2
-        if(day_of_week == 1 || day_of_week == 7) day_of_week = 0;
+        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK); // sat 7 sun 1 mon 2
+        if (day_of_week == 1 || day_of_week == 7) day_of_week = 0;
         else day_of_week -= 2;
 
         try {
@@ -238,7 +237,7 @@ public class Content extends Fragment {
             if (res.getString("type").equals(content_types[type])) {
 
                 Long timeMillis = parentActivity.getSharedPreferences(NotificationService.PREFS_NAME, 0).getLong(NotificationService.PREFS_HTTP_FOOD_DATE, 0L);
-                if(timeMillis != 0){
+                if (timeMillis != 0) {
                     createTextViewTimeDate(timeMillis);
                 }
 
@@ -249,11 +248,11 @@ public class Content extends Fragment {
                     String den = ob.getString("den");
                     createTextView(den, R.style.TextAppearance_AppCompat_Subhead, R.color.accent);
 
-                    if(prefSoup) {
+                    if (prefSoup) {
                         JSONObject polevka = ob.getJSONObject("polevka");
                         String polevkaNazev = polevka.getString("nazev");
                         if (!"".equals(polevkaNazev)) {
-                            createTextRow("", "Polévka: "+polevkaNazev, false);
+                            createTextRow("", "Polévka: " + polevkaNazev, false);
                         }
                         if (prefFood) {
                             String polevkaAlergeny = polevka.getString("alergeny");
@@ -268,9 +267,9 @@ public class Content extends Fragment {
                         JSONObject jidlo = jidla.getJSONObject(j);
                         String nazev = jidlo.getString("nazev");
                         createTextRow("" + (j + 1) + ") ", nazev, false);
-                        if(prefFood){
+                        if (prefFood) {
                             String alergeny = jidlo.getString("alergeny");
-                            createTextView("\tAlergeny: "+alergeny, R.style.TextAppearance_AppCompat_Caption);
+                            createTextView("\tAlergeny: " + alergeny, R.style.TextAppearance_AppCompat_Caption);
                         }
                     }
                     createVerticalSpace(1);
@@ -279,20 +278,20 @@ public class Content extends Fragment {
             } else {
                 return "Chyba pří načítání jídelny";
             }
-        }catch(JSONException e){
+        } catch (JSONException e) {
             return "Chyba pří načítání jídelny";
         }
     }
 
 
-    private void createTextView(String s, int resid){
+    private void createTextView(String s, int resid) {
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, resid);
         myTV.setText(s);
         content_layout.addView(myTV);
     }
 
-    private void createTextView(String s, int resid, int colorid){
+    private void createTextView(String s, int resid, int colorid) {
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, resid);
         myTV.setTextColor(getResources().getColor(colorid));
@@ -300,24 +299,24 @@ public class Content extends Fragment {
         content_layout.addView(myTV);
     }
 
-    private void createTextViewTimeDate(Long timeMillis){
+    private void createTextViewTimeDate(Long timeMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeMillis);
         SimpleDateFormat df = new SimpleDateFormat("ccc HH:mm");
         TextView myTV = new TextView(parentActivity);
         myTV.setTextAppearance(parentActivity, R.style.TextAppearance_AppCompat_Caption);
         myTV.setGravity(Gravity.RIGHT);
-        myTV.setText("Aktualizováno: "+df.format(calendar.getTime()));
+        myTV.setText("Aktualizováno: " + df.format(calendar.getTime()));
         content_layout.addView(myTV);
     }
 
-    private void createVerticalSpace(int lines){
+    private void createVerticalSpace(int lines) {
         TextView div = new TextView(parentActivity);
         div.setLines(lines);
         content_layout.addView(div);
     }
 
-    private void createTextRow(String s1, String s2, boolean align){
+    private void createTextRow(String s1, String s2, boolean align) {
         LinearLayout linearLayout = new LinearLayout(parentActivity);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         content_layout.addView(linearLayout);
@@ -329,7 +328,7 @@ public class Content extends Fragment {
             newTVleft.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             newTVleft.setTypeface(Typeface.DEFAULT_BOLD);
         }
-        if(align){
+        if (align) {
             newTVleft.setEms(8);
         }
         newTVleft.setText(s1);

@@ -21,12 +21,12 @@ import java.util.ArrayList;
 
 public class Home extends BaseActivity {
 
-    private int current; //Nutný pro refresh akci v action baru
+    private int current; // Needed for refresh action
 
-    public static final String PREFS_NAME = "PrefsFileDateID"; //viz setNewDateID()
+    public static final String PREFS_NAME = "PrefsFileDateID"; // see setNewDateID()
     public static final String PREFS_DATE_ID = "DateID";
 
-    //navigation drawer
+    // Navigation drawer
     private String[] navigationTitles;
     private ArrayList<NavigationItem> navigationItems;
     private NavigationAdapter drawerAdapter;
@@ -34,26 +34,27 @@ public class Home extends BaseActivity {
     private ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
 
-    //notifikace
+    // Notificiations
     private AlarmReceiver alarm;
 
-    @Override protected int getLayoutResource() {
+    @Override
+    protected int getLayoutResource() {
         return R.layout.activity_home;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set Content View se provede v BaseActivity
+        // Content View is set in BaseActivity
 
-        //Zavolá se setDefaultValues jen při úplně prvním spuštění aplikace na zařízení
+        // Calls setDefaultValues when launched for the first time
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         alarm = new AlarmReceiver();
         boolean notify = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_notify", false);
-        if(notify){ //nastavit pravidelné notifikace
+        if (notify) {
             alarm.setAlarm(this);
-        } else{ //zrušit notifikace
+        } else { // cancel notifications
             alarm.cancelAlarm(this);
         }
 
@@ -65,79 +66,72 @@ public class Home extends BaseActivity {
         navigationTitles = getResources().getStringArray(R.array.navigation_titles);
         TypedArray navigationIcons = getResources().obtainTypedArray(R.array.navigation_icons);
         navigationItems = new ArrayList<NavigationItem>();
-        // Nastavit adapter, který naplní navigation_drawer položkami NavigationItem (TextView+ImageView),
-        // které jsou specifikované v drawer_list_item.xml
-        for(int i=0;i<navigationTitles.length;i++){
+        // fill navigation drawer
+        for (int i = 0; i < navigationTitles.length; i++) {
             navigationItems.add(new NavigationItem(navigationTitles[i], navigationIcons.getResourceId(i, -1)));
         }
-        navigationIcons.recycle(); //uvolnit resources
+        navigationIcons.recycle(); // release resources
         drawerAdapter = new NavigationAdapter(this, R.layout.drawer_list_item, R.id.navigationTitle, navigationItems);
         drawerList.setAdapter(drawerAdapter);
 
-        // Zareagovat na kliknutí
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
-                /** Zavolá se teprve když je navigation drawer úplně zavřený */
-                public void onDrawerClosed(View view) {
-                    super.onDrawerClosed(view);
-                    getSupportActionBar().setTitle(getTitle());
-                    invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
-                }
-                /** Zavolá se teprve když je navigation drawer úplně otevřený */
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    getSupportActionBar().setTitle(R.string.title_navigation_drawer);
-                    invalidateOptionsMenu(); // zavolá onPrepareOptionsMenu()
-                }
-            };
+            /** Triggered when fully closed */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(getTitle());
+                invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+            }
 
-        // Nastavit vytvořený drawerToggle jako DrawerListener pro náš Layout s Navigation Drawerem
+            /** Triggered when fully opened */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(R.string.title_navigation_drawer);
+                invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+            }
+        };
+
         drawerLayout.setDrawerListener(drawerToggle);
 
-        current = 0; //nastav první stránku
+        current = 0; // set first page
     }
 
-    private boolean checkPreferenceSet(){
+    private boolean checkPreferenceSet() {
         return !("".equals(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_class", "")));
     }
-   /** Vynucení nastavení GJK třídy uživatele
-    * Je volána po onCreate(Bundle)
-    * Na rozdíl od ní se ale volá i po návratu ze Settings nebo obnovení view této Activity nebo po zrušení pause Activity
-    */
+
+    /**
+     * Force student class selection
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(!checkPreferenceSet()){ //není nastavené
-            //GJK třída musí být uživatelem nastavená, tak jdeme do nastavení
+        if (!checkPreferenceSet()) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(SettingsActivity.ARG_ASK, true); //kvůli Toast message
+            intent.putExtra(SettingsActivity.ARG_ASK, true); // Toast message
             startActivity(intent);
-        }
-        else{
-            selectItem(current); //obnov stránku vždy po obnovení této Activity
+        } else {
+            selectItem(current);
         }
     }
 
-    /* override kvůli aktualizaci ikony navigation draweru kdykoli po activity restore */
+    /* icon refresh */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync pokud byla zavolána onRestoreInstanceState
         drawerToggle.syncState();
     }
 
-    /* Zavolána při změně orientace obrazovky apod. */
+    /* orientation changed */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /* Zavolána při volání invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // Pokud je navigation drawer otevřen, skryj ikony action baru
         boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
         menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
@@ -153,70 +147,60 @@ public class Home extends BaseActivity {
 
     /* Navigation drawer click event */
     private void selectItem(int position) {
-        if(position == 3) { //položka nastavení
-            setNewDateID(); //kvůli zneplatnění dříve stahovaných dat
+        if (position == 3) {
+            setNewDateID(); // invalidate last data
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         } else {
-            navigationItems.get(current).setActivated(false); //remove bold
+            navigationItems.get(current).setActivated(false); // remove highlight
             current = position;
             createContent(position, false);
 
-            drawerList.setItemChecked(position, true); //default selector
+            drawerList.setItemChecked(position, true);
             setTitle(navigationTitles[position]);
-            navigationItems.get(position).setActivated(true); //set bold
-            drawerAdapter.notifyDataSetChanged(); //update list (bold)
+            navigationItems.get(position).setActivated(true); //set highlight
+            drawerAdapter.notifyDataSetChanged(); // update list
             drawerLayout.closeDrawer(drawerList);
         }
     }
 
-    /* Změní stávající fragment za nový, čímž vytvoří obsah hlavní stránky, parametr download ovlivní stažení nových dat */
-    private void createContent(int position, boolean download){
-        setNewDateID(); //kvůli zneplatnění dříve stahovaných dat
-        // Vytvoří nový fragment a nastaví obsah podle argumentu
-        Fragment fragment = new Content(); //moje třída Content
+    /* Change page content */
+    private void createContent(int position, boolean download) {
+        setNewDateID(); // invalidate
+        Fragment fragment = new Content();
         Bundle args = new Bundle();
-        args.putInt(Content.ARG_CONTENT_NUMBER, position); //přibalíme argument
-		args.putBoolean(Content.ARG_DOWNLOAD_CONTENT, download); //chceme stáhnout nová data?
+        args.putInt(Content.ARG_CONTENT_NUMBER, position);
+        args.putBoolean(Content.ARG_DOWNLOAD_CONTENT, download);
         fragment.setArguments(args);
-        // Vložíme nový fragment nahrazením stávajícího
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
-    /* Slouží později ve třídě Content pro zneplatnění dříve stahovaných dat
-     * Aplikace by jinak zapisovala na neexistující místo a spadla by
-     */
-    private void setNewDateID(){
+    private void setNewDateID() {
         SharedPreferences.Editor shared = getSharedPreferences(PREFS_NAME, 0).edit();
-        shared.putInt(PREFS_DATE_ID, (int)(Math.random()*100000));
+        shared.putInt(PREFS_DATE_ID, (int) (Math.random() * 100000));
         shared.apply();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //vytvoří položky v horní liště (action bar)
         getMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Předej event do ActionBarDrawerToggle
-        // když vrátí true, tak zpracoval kliknutí na app icon
+        // Pass event to ActionBarDrawerToggle
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        //jinak normálně zpracujeme action bar vpravo
-        // Akce po kliknutí na jednotlivé položky v horní liště (action bar)
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                this.createContent(current, true);//refresh vynutí download
+                this.createContent(current, true); // refresh
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
 }

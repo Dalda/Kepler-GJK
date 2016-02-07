@@ -14,30 +14,27 @@ import java.net.URL;
 public class HTML_Loader {
     private Context myContext;
 
-    public HTML_Loader(Context myContext){
+    public HTML_Loader(Context myContext) {
         this.myContext = myContext;
     }
 
-    /* Vrací boolean v závislosti na možnosti připojení se k internetu */
+    /* is connected? */
     public boolean checkConnection() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        //existuje připojení k síti a jsme připojeni k síti?
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             // OK
             return true;
         } else {
-            // chyba
             return false;
         }
     }
 
-    /* Vrátí String HTML stažené stránky, která je zadána jako parametr */
+    /* return HTML String */
     public String getHTML(String urlString) {
         InputStream is = null;
         String myURL = urlString;
-        //vezme URL a připojí se k internetu přes HttpURLConnection
         try {
             URL url = new URL(myURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -45,20 +42,18 @@ public class HTML_Loader {
             conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
-            // zde začne dotaz
             conn.connect();
             is = conn.getInputStream();
 
             StringBuilder builder = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 builder.append(line);
             }
             reader.close();
             is.close();
             return builder.toString();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return null;
         }
     }

@@ -1,23 +1,20 @@
 # Kepler-GJK
 
-Android aplikace pro Gymnázium Jana Keplera.
+Android app for Johannes Kepler Grammar School. Final informatics coursework. 
 
-Výsledkem projektu je aplikace, která umí uživateli ukazovat aktuální změny v jeho rozvrhu a denní menu školní jídelny.
+My first Android app. It was my Informatics coursework at my secondary school in Prague. 
 
-- **Aplikace:** [Google Play](https://play.google.com/store/apps/details?id=gjk.kepler)  
-- **Ukázka:** [screenshoty](https://github.com/Dalimil/Kepler-GJK/#screenshoty)
-- **Dokumentace:** [uživatelská i programátorská dokumentace](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/dokumentace.pdf)
-- **Repozitář:** [Dalimil/Kepler-GJK](https://github.com/Dalimil/Kepler-GJK) + [fork](http://github.com/gjkcz/Kepler-GJK) v archivu maturitních prací
-- **Autor:** [Dalimil Hájek](mailto:dalimilhajek@seznam.cz)
-- **Maturitní práce 2014/15** na [GJK](https://github.com/gjkcz/gjkcz)
+The app is in Czech and is used by Czech students who want to see changes in their timetable, daily lunch menu of the school's cafeteria, and other school-related information. They may also choose to be notified about these changes.
 
-## Dokumentace pro uživatele
-### Instalace a spuštění aplikace
+- **App store:** [Google Play](https://play.google.com/store/apps/details?id=gjk.kepler)  
+- **Screenshots:** [Screenshots](https://github.com/Dalimil/Kepler-GJK/#Screenshots)
+- **Author:** [Dalimil Hajek](mailto:dalimilhajek@seznam.cz)
+
 <a href="https://play.google.com/store/apps/details?id=gjk.kepler&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" /></a>
 
-## [Dokumentace pro programátory](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/dokumentace.pdf)
+## [Final Report/Docs (Czech)](https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/dokumentace.pdf)
 
-## Screenshoty
+## Screenshots
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_suplovani_framed.png" align="left" height="600" width="360" alt="Suplování"/>
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_jidelna_framed.png" align="left" height="600" width="360" alt="Jídelna"/>
@@ -29,5 +26,4 @@ Výsledkem projektu je aplikace, která umí uživateli ukazovat aktuální změ
 
 <img src="https://github.com/Dalimil/Kepler-GJK/blob/master/Docs/Screenshots/screenshot_settings.png" align="left" height="390" width="234" alt="Nastavení"/>
 
-*Ukázkové screenshoty z aplikace*
 

@@ -5,19 +5,25 @@ public class NavigationItem {
     private int icon;
     private boolean activated;
 
-    public NavigationItem(String title, int icon){
+    public NavigationItem(String title, int icon) {
         this.title = title;
         this.icon = icon;
         this.activated = false;
     }
 
-    public int getIcon(){
+    public int getIcon() {
         return this.icon;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return this.title;
     }
-    public boolean getActivated() { return this.activated; }
 
-    public void setActivated(boolean state) { this.activated = state; }
+    public boolean getActivated() {
+        return this.activated;
+    }
+
+    public void setActivated(boolean state) {
+        this.activated = state;
+    }
 }

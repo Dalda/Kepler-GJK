@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-/** Tato třída udržuje wake lock pro moji třídu NotificationService, která udělá svou práci a pak uvolní lock */
-public class AlarmReceiver extends WakefulBroadcastReceiver{
+/**
+ * This class keeps wake lock for NotificationService
+ */
+public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
@@ -17,30 +19,30 @@ public class AlarmReceiver extends WakefulBroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent service = new Intent(context, NotificationService.class);
-        startWakefulService(context, service); //spustit service a udržuj zařízení (telefon) zapnuté
+        startWakefulService(context, service);
     }
 
-    /** Nastaví opakující se alarm
-     *  Po spuštění alarmu aplikace v budoucnu broadcastne Intent do metody onReceive
+    /**
+     * Set recurring alarm
+     * Broadcast Intent to onReceive after triggering alarm
      */
     public void setAlarm(Context context) {
-        if(alarmSet) return; //nemá smysl nastavovat dvakrát
+        if (alarmSet) return; //don't set twice
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0); //postará se o broadcast
+        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        //spustit za hodinu a pak každou další hodinu
+        // trigger every hour
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime()+AlarmManager.INTERVAL_HOUR,
+                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HOUR,
                 AlarmManager.INTERVAL_HOUR, alarmIntent);
 
         alarmSet = true;
     }
 
-    /** Zruší alarm */
     public void cancelAlarm(Context context) {
-        if(!alarmSet) return; //nemá smysl pokračovat v rušení
+        if (!alarmSet) return;
 
         if (alarmMgr != null) {
             alarmMgr.cancel(alarmIntent);
